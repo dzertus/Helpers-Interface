@@ -52,12 +52,16 @@ class ScriptModel(Model):
             raise KeyError(str(e) + " not in the model's item list.")
 
 class Script:
-    def __init__(self, name, content, doc, dcc):
-        self.name = name
-        self.content = content
-        self.doc = doc
-        self.dcc = dcc
-        print ('Script {} created'.format(self.name))
+    def __init__(self, path):
+        self.path = path
+        self.name = __name__
+        self.dcc = 'maya'
 
-    def __getattr__(self, attr_name):
-       return self[attr_name]
+    def get_name(self):
+        return type(self.__name__)
+
+    def get_dcc(self):
+        pass
+
+#    def __getattr__(self, attr_name):
+#       return self[attr_name]

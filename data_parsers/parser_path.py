@@ -1,3 +1,6 @@
+"""
+Parsing Method for modules collection
+"""
 import os
 
 class ParserPath:

@@ -3,6 +3,6 @@ class PrintToto:
         """
         Initialize Print TOTO
         """
-        print('I')
+        print('Initialize PrintToto')
         self.name = cls.__name__
         self.dcc = 'maya'

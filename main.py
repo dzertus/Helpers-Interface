@@ -13,11 +13,12 @@ scripts = defaultdict(lambda: -1)
 parser = parser_path.ParserPath(source_path)
 
 modules_paths = parser.get_modules()
-modules = []
+scripts = []
 for module_path in modules_paths:
-    modules.append(classes.Module(module_path))
-for module in modules:
-    print (module.get_content())
+    scripts.append(model_abstract.Script(module_path))
+
+for script in scripts:
+    print (script.get_name())
 
 model = model_abstract.ScriptModel()
 view = view_abstract.ViewAbstract()
