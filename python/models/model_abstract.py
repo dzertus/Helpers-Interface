@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+
+import os
+
 from abc import ABC, abstractmethod
 from collections import defaultdict
 
@@ -35,8 +39,7 @@ class ScriptModel(Model):
         :param product:
         :return:
         """
-
-        pass
+        self.scripts[script.name] = script
 
     def remove(self, script_name):
         """
@@ -44,6 +47,7 @@ class ScriptModel(Model):
         :param product_name:
         :return:
         """
+        self.scripts.pop(script_name)
 
     def get(self, script):
         try:
@@ -51,17 +55,32 @@ class ScriptModel(Model):
         except KeyError as e:
             raise KeyError(str(e) + " not in the model's item list.")
 
-class Script:
+class ScriptAbstract():
     def __init__(self, path):
         self.path = path
-        self.name = __name__
-        self.dcc = 'maya'
+        self.module_name = os.path.splitext(os.path.basename(self.path))[0]
+        self.name = None
+        self.dcc = None
+        self.icon = None
 
+    @abstractmethod
+    def run(self):
+        pass
+
+    @abstractmethod
     def get_name(self):
-        return type(self.__name__)
+        pass
 
+    @abstractmethod
     def get_dcc(self):
         pass
 
-#    def __getattr__(self, attr_name):
-#       return self[attr_name]
+    @abstractmethod
+    def get_icon(self):
+        pass
+
+    def get_module_name(self):
+        return self.module_name
+
+    def get_module_path(self):
+        return self.path

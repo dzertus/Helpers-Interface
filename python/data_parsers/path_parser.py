@@ -3,9 +3,15 @@ Parsing Method for modules collection
 """
 import os
 
-class ParserPath:
+class PathParser:
     def __init__(self, path):
-        self.path = path
+        if path is None:
+            return
+        if os.path.exists(path) == False:
+            if path is not None:
+                raise OSError('Path does not exist')
+
+        self.path = self.new_path(path)
         self.files = self.get_files()
         self.modules = self.get_modules()
 
@@ -17,7 +23,7 @@ class ParserPath:
         :return: (str)
         """
         self.path = path
-
+        self.files = self.get_files()
 
     def get_files(self):
         """

@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+import os
+from models import model_abstract
+
+class Script(model_abstract.ScriptAbstract):
+    def __init__(self, path):
+        super().__init__(path)
+        self.path = path
+        self.name = 'Print Toto'
+        self.dcc = ['maya']
+        self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons", str(self.__class__))
+
+    def run(self):
+      print('This is a template script')
+
+    def get_name(self):
+        return type(self)
+
+    def get_dcc(self):
+        return self.dcc
+
+    def get_icon(self):
+        return self.icon
