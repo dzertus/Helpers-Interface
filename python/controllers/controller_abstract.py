@@ -6,6 +6,10 @@ class Controller:
         self.model = model
         self.view = view
 
+    def run_script(self, item):
+
+        item.run()
+
     def add_item(self, item):
         self.model.add(item)
         self.view.add_button(item)

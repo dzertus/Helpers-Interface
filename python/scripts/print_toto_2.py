@@ -13,7 +13,7 @@ class Script(model_abstract.ScriptAbstract):
                                  '{0}.{1}'.format(self.module_name, 'png'))
 
     def run(self):
-      print('This is a template script')
+      print('Print Toto 2')
 
     def get_name(self):
         return type(self)

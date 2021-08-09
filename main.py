@@ -26,7 +26,6 @@ for module_path in modules_paths:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     script = module.Script(module_path)
-
     scripts.append(script)
 
 model = model_abstract.ScriptModel()
@@ -41,6 +40,7 @@ for script in scripts:
     module_name = script.get_module_name()
     module_path = script.get_module_path()
     controller.add_item(script)
+
 
 controller.show_items()
 
