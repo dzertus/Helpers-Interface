@@ -7,7 +7,7 @@ class Script(model_abstract.ScriptAbstract):
     def __init__(self, path):
         super().__init__(path)
         self.path = path
-        self.name = 'Print Toto'
+        self.name = 'Print Toto 3'
         self.dcc = ['maya']
         self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
                                  '{0}.{1}'.format(self.module_name, 'png'))

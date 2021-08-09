@@ -10,6 +10,10 @@ class Interface(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Maya Helpers Interface")
+        self.setStyleSheet("background-color: #221E1D;"
+                           "border :2px solid ;")
+
+
 
         centralWidget = QtWidgets.QWidget(self)
         self.setCentralWidget(centralWidget)
@@ -18,34 +22,59 @@ class Interface(QtWidgets.QMainWindow):
         centralWidget.setLayout(self.gridLayout)
         self.gridLayout.setDefaultPositioning(0, QtCore.Qt.Vertical)
 
-    def start(self):
-        print('Opening the view')
-
     def add_button(self, item):
-
+        """
+        Adds a button to the grid layout , will be visible to the viewer
+        :param item: (model_abstract.ScriptAbstract)
+        :return:
+        """
         button = ToolButton(item)
         self.gridLayout.addWidget(button)
-        button.setText('')
-        button.setMaximumSize(50, 50)
 
-        button.show()
-
-
+class Colors():
+    pass
 
 class ToolButton(QtWidgets.QPushButton):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.setText(self.item.name)
+
+        self.setStyleSheet("background-color: #36302E;"
+                           "border :2px solid ;")
+        self.setMinimumSize(120, 40)
+        self.setMaximumSize(120, 40)
+        self.setToolTip(self.item.name)
 
         #Icon
         pixmap = QtGui.QPixmap(self.item.icon)
         icon = QtGui.QIcon(pixmap)
         self.setIcon(icon)
+        self.show()
 
-        #Function
-        self.clicked.connect(self.button_pressed)
+    def mousePressEvent(self, QMouseEvent):
+        if QMouseEvent.button() == QtGui.Qt.LeftButton:
+            self.button_pressed()
+        elif QMouseEvent.button() == QtGui.Qt.RightButton:
+            print("Opening Advanced")
+            self.switch_advanced()
 
     def button_pressed(self):
+        """
+        Left Click
+        Run the function run of the script Item
+        :return:
+        """
         self.item.run()
 
+    def switch_advanced(self):
+        """
+        Right Click
+        Turn on advanced mode
+        :return:
+        """
+        pass
+
+class AdvancedMode(QtWidgets.QWidget):
+    def __init__(self, item):
+        super().__init__()
+        pass
