@@ -4,28 +4,38 @@
 import sys
 from PySide2 import QtGui
 from PySide2 import QtWidgets
+from PySide2 import QtCore
 
 
-class MyWindow(QtWidgets.QMainWindow):
-
+class Interface(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Maya Helpers Interface')
-        self.setWindowIcon(QtGui.QIcon('icon.png'))
-        self.resize(700, 50)
-        self.setMinimumHeight(50)
-        self.setMinimumWidth(350)
+        self.setWindowTitle("Hello world - pythonprogramminglanguage.com")
 
-        self.grid_layout = QtWidgets.QGridLayout()
+        centralWidget = QtWidgets.QWidget(self)
+        self.setCentralWidget(centralWidget)
+
+        self.gridLayout = QtWidgets.QGridLayout(self)
+        centralWidget.setLayout(self.gridLayout)
+
+
+    def start(self):
+        print('Opening the view')
+
+    def add_button(self, item):
+        pixmap = QtGui.QPixmap(item.icon)
+        icon = QtGui.QIcon(pixmap)
+        button = ToolButton(item.icon)
+        button.setIcon(icon)
+        self.gridLayout.addWidget(button)
+
+        button.setText('')
+        button.setMaximumSize(50, 50)
+
+        button.show()
 
 class ToolButton(QtWidgets.QPushButton):
-    def __init__(self):
+    def __init__(self, name):
         super().__init__()
-        pass
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+        self.setText(name)
 
-    myWindow = MyWindow()
-    myWindow.show()
-
-    sys.exit(app.exec_())

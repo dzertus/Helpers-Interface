@@ -1,4 +1,5 @@
 import importlib.util
+import sys
 from collections import defaultdict
 
 from models import model_abstract
@@ -6,6 +7,7 @@ from views import view_abstract
 from controllers import controller_abstract
 from data_parsers import path_parser
 
+from PySide2 import QtWidgets
 
 
 source_paths = [r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python\scripts"]
@@ -28,13 +30,18 @@ for module_path in modules_paths:
     scripts.append(script)
 
 model = model_abstract.ScriptModel()
-view = view_abstract.QtView()
+
+
+app = QtWidgets.QApplication(sys.argv)
+view = view_abstract.Interface()
+view.show()
 controller = controller_abstract.Controller(model, view)
 
 for script in scripts:
     module_name = script.get_module_name()
     module_path = script.get_module_path()
-
     controller.add_item(script)
 
 controller.show_items()
+
+sys.exit( app.exec_() )

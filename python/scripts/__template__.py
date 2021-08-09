@@ -12,8 +12,8 @@ class Script(model_abstract.ScriptAbstract):
         super().__init__(path)
         self.path = path
         self.name = 'Template Script' #TODO
-        self.dcc = None #TODO
-        self.icon = os.path.join(r"[PATH]", str(self.__class__)) #TODO
+        self.dcc = [None] #TODO
+        self.icon = os.path.join(r"[PATH]", self.module_name) #TODO
 
     def run(self):
         """
