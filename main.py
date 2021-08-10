@@ -35,7 +35,7 @@ model = model_abstract.ScriptModel()
 #View
 app = QtWidgets.QApplication(sys.argv)
 view = view_abstract.ViewsController()
-view.initialize_normal_view()
+view.show_normal_view()
 
 #Controller
 controller = controller_abstract.Controller(model, view)
@@ -43,10 +43,9 @@ controller = controller_abstract.Controller(model, view)
 for script in scripts:
     module_name = script.get_module_name()
     module_path = script.get_module_path()
-    controller.add_item(script)
+    controller.add_item(view, script)
 
 controller.show_items()
-
 
 
 sys.exit( app.exec_() )
