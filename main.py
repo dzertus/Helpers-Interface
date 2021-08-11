@@ -1,6 +1,5 @@
 import importlib.util
 import sys
-from collections import defaultdict
 
 if r'C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python' not in sys.path:
     sys.path.append(r'C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python')
@@ -44,10 +43,10 @@ controller = controller_abstract.Controller(model, view)
 
 #Populate
 for script in scripts:
-    # module_name = script.get_module_name()
-    # module_path = script.get_module_path()
+    module_name = script.get_module_name()
+    module_path = script.get_module_path()
     controller.add_item(script)
 
 
 controller.show_items()
-sys.exit( app.exec_() )
+sys.exit(app.exec_())

@@ -21,9 +21,11 @@ class Script(model_abstract.ScriptAbstract):
     def get_icon(self):
         return self.icon
 
+    def get_doc(self):
+        return 'This script prints toto'
+
     def run(self):
         """
         Script Main Function
         """
-        print('Print Toto')
-
+        print('Hello it is Toto')

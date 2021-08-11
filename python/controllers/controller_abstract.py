@@ -21,13 +21,3 @@ class Controller:
 
     def show_items(self):
         pass
-
-    def show_item_information(self, item_name):
-        try:
-            item_info = self.model.get(item_name)
-        except Exception:
-            item_type = self.model.item_type
-            self.view.item_not_found(item_type, item_name)
-        else:
-            item_type = self.model.item_type
-            self.view.show_item_information(item_type, item_name, item_info)

@@ -116,7 +116,6 @@ class InterfaceController:
         print('Initialize View Controller')
         self.normal_view = NormalInterface(self)
         self.normal_view.show()
-        self.tool_buttons = list()
 
     def add_button(self, item):
         """
@@ -125,7 +124,7 @@ class InterfaceController:
         :param item: (model_abstract.ScriptAbstract)
         :return:
         """
-
+        #TODO : Refactor
         #Normal View Button
         normal_button = ToolButton(self.normal_view, item)
         self.normal_view.add_button(normal_button)
@@ -138,9 +137,12 @@ class InterfaceController:
         normal_button.set_advanced_view(advanced_view)
         advanced_button.set_advanced_view(advanced_view)
 
-        self.tool_buttons.append(normal_button)
+        self.set_documentation(item, advanced_view)
+        self.set_source_code(item, advanced_view)
+
 
     def get_active_view(self, button):
+        #TODO : Refactor
         active_view = None
         if isinstance(button.parent, NormalInterface):
             active_view = self.normal_view
@@ -149,7 +151,7 @@ class InterfaceController:
         return active_view
 
     def switch_view(self, button):
-
+        #TODO : Refactor
         active_view = self.get_active_view(button)
         passive_view = self.normal_view
         if active_view == self.normal_view:
@@ -160,4 +162,10 @@ class InterfaceController:
         passive_view.move(pos.x(), pos.y())
         passive_view.show()
 
+    def set_documentation(self,item , view):
+        documentation = item.get_doc()
+        view.tab.text_edit_doc.set_text(documentation)
 
+    def set_source_code(self, item, view):
+        source_code = open(item.get_module_path(),'r')
+        view.tab.text_edit_source.set_text(source_code.read())

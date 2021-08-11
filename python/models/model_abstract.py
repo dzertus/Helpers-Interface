@@ -79,6 +79,10 @@ class ScriptAbstract():
     def get_icon(self):
         pass
 
+    @abstractmethod
+    def get_doc(self):
+        pass
+
     def get_module_name(self):
         return self.module_name
 
