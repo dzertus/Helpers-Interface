@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-#TODO Are to be replaced
+Replace #TODO
 """
 
 import os
@@ -12,16 +12,8 @@ class Script(model_abstract.ScriptAbstract):
         super().__init__(path)
         self.path = path
         self.name = 'Template Script' #TODO
-        self.dcc = None #TODO
-        self.icon = os.path.join(r"[PATH]", str(self.__class__)) #TODO
-
-    def run(self):
-        """
-        Script
-        :return:
-        """
-        # TODO
-        return None
+        self.dcc = [None] #TODO
+        self.icon = os.path.join(r"[PATH]", self.module_name) #TODO
 
     def get_name(self):
         """
@@ -43,3 +35,10 @@ class Script(model_abstract.ScriptAbstract):
         :return: (str)
         """
         return self.icon
+
+    def run(self):
+        """
+        Script Main Function
+        """
+        # TODO
+        return None

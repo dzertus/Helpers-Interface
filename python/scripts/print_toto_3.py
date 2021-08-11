@@ -7,10 +7,13 @@ class Script(model_abstract.ScriptAbstract):
     def __init__(self, path):
         super().__init__(path)
         self.path = path
-        self.name = 'Print Toto'
+        self.name = 'Print Toto 3'
         self.dcc = ['maya']
         self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
                                  '{0}.{1}'.format(self.module_name, 'png'))
+
+    def run(self):
+      print('Print Toto 3')
 
     def get_name(self):
         return type(self)
@@ -20,12 +23,3 @@ class Script(model_abstract.ScriptAbstract):
 
     def get_icon(self):
         return self.icon
-
-    def get_doc(self):
-        return 'This script prints toto'
-
-    def run(self):
-        """
-        Script Main Function
-        """
-        print('Hello it is Toto')
