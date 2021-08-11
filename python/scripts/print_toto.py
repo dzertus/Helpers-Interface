@@ -12,9 +12,6 @@ class Script(model_abstract.ScriptAbstract):
         self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
                                  '{0}.{1}'.format(self.module_name, 'png'))
 
-    def run(self):
-      print('Print Toto')
-
     def get_name(self):
         return type(self)
 
@@ -23,3 +20,10 @@ class Script(model_abstract.ScriptAbstract):
 
     def get_icon(self):
         return self.icon
+
+    def run(self):
+        """
+        Script Main Function
+        """
+        print('Print Toto')
+

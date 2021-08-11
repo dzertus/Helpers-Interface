@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-from abc import ABC, abstractmethod
-
 from PySide2 import QtGui
 from PySide2 import QtWidgets
 from PySide2 import QtCore
@@ -9,115 +7,115 @@ from PySide2 import QtCore
 from views.classes import ToolButton
 
 
-class InterfaceAbstract(QtWidgets.QMainWindow):
+class InterfaceFactory(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.active_view = None
 
-    @abstractmethod
+    def add_button(self, item):
+        """
+        Adds a button to the grid layout , will be visible to the viewer
+        :param item: (model_abstract.ScriptAbstract)
+        :return:
+        """
+        raise NotImplementedError
+
     def set_window_title(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
-    def close_ui(self):
-        pass
+    def get_active_button(self):
+        raise NotImplementedError
+
+    def hide_ui(self):
+        raise NotImplementedError
 
 
-class NormalInterface(InterfaceAbstract):
-    def __init__(self):
+class NormalInterface(InterfaceFactory):
+    def __init__(self, controller):
         super().__init__()
+        self.controller = controller
         self.title = 'Maya Helpers Interface'
 
         self.set_window_title()
 
         self.setStyleSheet("background-color: #221E1D;"
                            "border :2px solid ;")
+        self.setFixedHeight(70)
 
         centralWidget = QtWidgets.QWidget(self)
         self.setCentralWidget(centralWidget)
 
-        self.gridLayout = QtWidgets.QGridLayout(self)
-        centralWidget.setLayout(self.gridLayout)
-        self.gridLayout.setDefaultPositioning(0, QtCore.Qt.Vertical)
+        self.container_layout = QtWidgets.QGridLayout(self)
+        centralWidget.setLayout(self.container_layout)
+        self.container_layout.setDefaultPositioning(0, QtCore.Qt.Vertical)
 
-    def add_button(self, item):
-        """
-        Adds a button to the grid layout , will be visible to the viewer
-        :param item: (model_abstract.ScriptAbstract)
-        :return:
-        """
-        button = ToolButton(item)
-        self.gridLayout.addWidget(button)
+    def add_button(self, button):
+        self.container_layout.addWidget(button)
 
     def set_window_title(self):
         self.setWindowTitle(self.title)
 
-    def get_active_button(self):
-        pass
+    def show_ui(self):
+        self.show()
 
-    def close_ui(self):
-        self.close()
+    def hide_ui(self):
+        self.hide()
 
+    def set_advanced_view(self, advanced_view):
+        self.advanced_view = advanced_view
 
-class AdvancedInterface(InterfaceAbstract):
-    def __init__(self, item):
+class AdvancedInterface(InterfaceFactory):
+    def __init__(self, controller):
         super().__init__()
+        self.controller = controller
+
         self.title = 'Maya Helpers Interface Advanced'
 
-        self.item = item
         self.set_window_title()
-        self.setStyleSheet("background-color: #36302E;"
+
+        self.setStyleSheet("background-color: #221E1D;"
                            "border :2px solid ;")
+        self.resize(600, 400)
 
-        self.setMinimumSize(120, 40)
-        self.setMaximumSize(120, 40)
-        self.setToolTip(self.item.name)
+        centralWidget = QtWidgets.QWidget(self)
+        self.setCentralWidget(centralWidget)
 
-        #Icon
-        pixmap = QtGui.QPixmap(self.item.icon)
-        icon = QtGui.QIcon(pixmap)
-        self.setIcon(icon)
+        self.container_layout = QtWidgets.QVBoxLayout(self)
+        self.container_layout.setAlignment(QtCore.Qt.AlignTop)
+        centralWidget.setLayout(self.container_layout)
+
+    def add_button(self, button):
+        self.button = button
+        self.container_layout.addWidget(self.button)
 
     def set_window_title(self):
         self.setWindowTitle(self.title)
 
-    def get_active_button(self):
-        pass
+    def show_ui(self):
+        self.show()
 
-    def close_ui(self):
-        self.close()
+    def hide_ui(self):
+        self.hide()
 
 
-class ViewsController:
+class InterfaceController:
     def __init__(self):
         print('Initialize View Controller')
-        self.normal_view = None
-        self.advanced_view = None
-        self.views = [self.normal_view, self.advanced_view]
+        self.normal_view = NormalInterface(self)
+        self.normal_view.show()
 
     def add_button(self, item):
         """
-        Adds a button to the grid layout , will be visible to the viewer
+        Creates button for the normal view
+        Generates the advanced view for the button
         :param item: (model_abstract.ScriptAbstract)
         :return:
         """
-        self.active_view.add_button(item)
-
-    def show_normal_view(self):
-        if self.normal_view == None:
-            self.normal_view = NormalInterface()
-        self.active_view = self.normal_view
-        self.inactive_view = self.advanced_view
-        self.normal_view.show()
-
-    def show_advanced_view(self):
-        if self.advanced_view == None:
-            self.advanced_view = AdvancedInterface()
-        self.active_view = self.advanced_view
-        self.inactive_view = self.normal_view
-        self.advanced_view.show()
+        normal_button = ToolButton(self, item)
+        self.normal_view.add_button(normal_button)
+        advanced_view = AdvancedInterface(self)
+        advanced_button = ToolButton(self, item)
+        advanced_view.add_button(advanced_button)
 
     def switch_view(self):
-        print('switching view')
-        self.inactive_view.close()
-        self.active_view.show()
+        print('Switching View')

@@ -2,6 +2,9 @@ import importlib.util
 import sys
 from collections import defaultdict
 
+if r'C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python' not in sys.path:
+    sys.path.append(r'C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python')
+
 from models import model_abstract
 from views import view_abstract
 from controllers import controller_abstract
@@ -34,18 +37,16 @@ model = model_abstract.ScriptModel()
 
 #View
 app = QtWidgets.QApplication(sys.argv)
-view = view_abstract.ViewsController()
-view.show_normal_view()
+view = view_abstract.InterfaceController()
 
 #Controller
 controller = controller_abstract.Controller(model, view)
 
+#Populate
 for script in scripts:
-    module_name = script.get_module_name()
-    module_path = script.get_module_path()
-    controller.add_item(view, script)
+    # module_name = script.get_module_name()
+    # module_path = script.get_module_path()
+    controller.add_item(script)
 
 controller.show_items()
-
-
 sys.exit( app.exec_() )
