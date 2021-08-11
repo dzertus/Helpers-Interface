@@ -4,7 +4,9 @@ from PySide2 import QtGui
 from PySide2 import QtWidgets
 from PySide2 import QtCore
 
-from views.classes import ToolButton
+from collections import defaultdict
+
+from views.classes import ToolButton, Tab
 
 
 class InterfaceFactory(QtWidgets.QMainWindow):
@@ -64,6 +66,10 @@ class NormalInterface(InterfaceFactory):
     def set_advanced_view(self, advanced_view):
         self.advanced_view = advanced_view
 
+    def get_pos(self):
+        return self.pos()
+
+
 class AdvancedInterface(InterfaceFactory):
     def __init__(self, controller):
         super().__init__()
@@ -82,6 +88,10 @@ class AdvancedInterface(InterfaceFactory):
 
         self.container_layout = QtWidgets.QVBoxLayout(self)
         self.container_layout.setAlignment(QtCore.Qt.AlignTop)
+
+        self.tab = Tab()
+        self.container_layout.addWidget(self.tab)
+
         centralWidget.setLayout(self.container_layout)
 
     def add_button(self, button):
@@ -97,12 +107,16 @@ class AdvancedInterface(InterfaceFactory):
     def hide_ui(self):
         self.hide()
 
+    def get_pos(self):
+        return self.pos()
+
 
 class InterfaceController:
     def __init__(self):
         print('Initialize View Controller')
         self.normal_view = NormalInterface(self)
         self.normal_view.show()
+        self.tool_buttons = list()
 
     def add_button(self, item):
         """
@@ -111,11 +125,39 @@ class InterfaceController:
         :param item: (model_abstract.ScriptAbstract)
         :return:
         """
-        normal_button = ToolButton(self, item)
+
+        #Normal View Button
+        normal_button = ToolButton(self.normal_view, item)
         self.normal_view.add_button(normal_button)
+
+        #Advanced View
         advanced_view = AdvancedInterface(self)
-        advanced_button = ToolButton(self, item)
+        advanced_button = ToolButton(advanced_view, item)
         advanced_view.add_button(advanced_button)
 
-    def switch_view(self):
-        print('Switching View')
+        normal_button.set_advanced_view(advanced_view)
+        advanced_button.set_advanced_view(advanced_view)
+
+        self.tool_buttons.append(normal_button)
+
+    def get_active_view(self, button):
+        active_view = None
+        if isinstance(button.parent, NormalInterface):
+            active_view = self.normal_view
+        elif isinstance(button.parent, AdvancedInterface):
+            active_view = button.advanced_view
+        return active_view
+
+    def switch_view(self, button):
+
+        active_view = self.get_active_view(button)
+        passive_view = self.normal_view
+        if active_view == self.normal_view:
+            passive_view = button.advanced_view
+
+        pos = button.parent.get_pos()
+        active_view.hide()
+        passive_view.move(pos.x(), pos.y())
+        passive_view.show()
+
+
