@@ -7,13 +7,14 @@ Replace #TODO
 import os
 from models import model_abstract
 
+
 class Script(model_abstract.ScriptAbstract):
     def __init__(self, path):
         super().__init__(path)
         self.path = path
-        self.name = 'Template Script' #TODO
-        self.dcc = [None] #TODO
-        self.icon = os.path.join(r"[PATH]", self.module_name) #TODO
+        self.name = 'Template Script'  # TODO
+        self.dcc = [None]  # TODO
+        self.icon = os.path.join(r"[PATH]", self.module_name)  # TODO
 
     def get_name(self):
         """

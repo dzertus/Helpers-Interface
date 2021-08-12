@@ -2,9 +2,9 @@
 
 from PySide2 import QtGui
 from PySide2 import QtWidgets
-from PySide2 import QtCore
 
 from views import classes
+
 
 class TextEditAbstract(QtWidgets.QTextEdit):
     def __init__(self):
