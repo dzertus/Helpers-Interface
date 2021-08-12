@@ -2,24 +2,20 @@
 
 import os
 
-from abc import ABC, abstractmethod
 from collections import defaultdict
 
-class Model(ABC):
-    @abstractmethod
+class Model():
     def __iter__(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get(self, item):
         """Returns an object with a .items() call method
         that iterates over key,value pairs of its information."""
-        pass
+        raise NotImplementedError
 
     @property
-    @abstractmethod
     def item_type(self):
-        pass
+        raise NotImplementedError
 
 class ScriptModel(Model):
     print('Initialize Model')
@@ -63,26 +59,20 @@ class ScriptAbstract():
         self.dcc = None
         self.icon = None
 
-    @abstractmethod
     def run(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_name(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_dcc(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_icon(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_doc(self):
         pass
-
     def get_module_name(self):
         return self.module_name
 

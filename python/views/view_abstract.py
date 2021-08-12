@@ -6,8 +6,8 @@ from PySide2 import QtCore
 
 from collections import defaultdict
 
-from views.classes import ToolButton, Tab
-
+from views import classes
+from views import button_widgets
 
 class InterfaceFactory(QtWidgets.QMainWindow):
     def __init__(self):
@@ -89,7 +89,7 @@ class AdvancedInterface(InterfaceFactory):
         self.container_layout = QtWidgets.QVBoxLayout(self)
         self.container_layout.setAlignment(QtCore.Qt.AlignTop)
 
-        self.tab = Tab()
+        self.tab = classes.Tab()
         self.container_layout.addWidget(self.tab)
 
         centralWidget.setLayout(self.container_layout)
@@ -126,12 +126,12 @@ class InterfaceController:
         """
         #TODO : Refactor
         #Normal View Button
-        normal_button = ToolButton(self.normal_view, item)
+        normal_button = button_widgets.ToolButton(self.normal_view, item)
         self.normal_view.add_button(normal_button)
 
         #Advanced View
         advanced_view = AdvancedInterface(self)
-        advanced_button = ToolButton(advanced_view, item)
+        advanced_button = button_widgets.ToolButton(advanced_view, item)
         advanced_view.add_button(advanced_button)
 
         normal_button.set_advanced_view(advanced_view)

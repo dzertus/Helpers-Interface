@@ -11,7 +11,6 @@ from data_parsers import path_parser
 
 from PySide2 import QtWidgets
 
-
 source_paths = [r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python\scripts"]
 
 parser = path_parser.PathParser(None)
@@ -31,22 +30,21 @@ for module_path in modules_paths:
     script = module.Script(module_path)
     scripts.append(script)
 
-#Model
+# Model
 model = model_abstract.ScriptModel()
 
-#View
+# View
 app = QtWidgets.QApplication(sys.argv)
 view = view_abstract.InterfaceController()
 
-#Controller
+# Controller
 controller = controller_abstract.Controller(model, view)
 
-#Populate
+# Populate
 for script in scripts:
     module_name = script.get_module_name()
     module_path = script.get_module_path()
     controller.add_item(script)
-
 
 controller.show_items()
 sys.exit(app.exec_())
