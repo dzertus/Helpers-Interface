@@ -2,24 +2,20 @@
 
 import os
 
-from abc import ABC, abstractmethod
-from collections import defaultdict
 
-class Model(ABC):
-    @abstractmethod
+class Model:
     def __iter__(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get(self, item):
         """Returns an object with a .items() call method
         that iterates over key,value pairs of its information."""
-        pass
+        raise NotImplementedError
 
     @property
-    @abstractmethod
     def item_type(self):
-        pass
+        raise NotImplementedError
+
 
 class ScriptModel(Model):
     print('Initialize Model')
@@ -27,7 +23,7 @@ class ScriptModel(Model):
 
     def __init__(self, scripts=None):
         if scripts is None:
-            scripts = defaultdict(lambda: -1)
+            scripts = dict()
         self.scripts = scripts
 
     def __iter__(self):
@@ -36,7 +32,7 @@ class ScriptModel(Model):
     def add(self, script):
         """
         Append in Scripts
-        :param product:
+        :param script:
         :return:
         """
         self.scripts[script.name] = script
@@ -44,18 +40,28 @@ class ScriptModel(Model):
     def remove(self, script_name):
         """
         Pop from Scripts
-        :param product_name:
+        :param script_name:
         :return:
         """
         self.scripts.pop(script_name)
 
     def get(self, script):
+        """
+        Get a particular script from a list of scripts
+        :param script: (ScriptAbstract)
+        :return: script (ScriptAbstract) or Does not exist Error
+        """
         try:
             return self.scripts[script]
         except KeyError as e:
             raise KeyError(str(e) + " not in the model's item list.")
 
-class ScriptAbstract():
+
+class ScriptAbstract:
+    """
+    This class is parent class for the scripts eg : scripts/__template__.py
+    """
+
     def __init__(self, path):
         self.path = path
         self.module_name = os.path.splitext(os.path.basename(self.path))[0]
@@ -63,28 +69,28 @@ class ScriptAbstract():
         self.dcc = None
         self.icon = None
 
-    @abstractmethod
     def run(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_name(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_dcc(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_icon(self):
-        pass
-
-    @abstractmethod
-    def get_doc(self):
-        pass
+        raise NotImplementedError
 
     def get_module_name(self):
+        """
+        Script module base name
+        :return: (str)
+        """
         return self.module_name
 
     def get_module_path(self):
+        """
+        Script module location
+        :return: (str)
+        """
         return self.path
