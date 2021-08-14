@@ -7,13 +7,23 @@ from PySide2.QtWidgets import QApplication
 from views.view_abstract import NormalInterface, AdvancedInterface
 from views.button_widgets import ToolButton
 
+class ControllerAbstract:
+    def __init__(self):
+        pass
 
-class InterfaceController:
+    def add_item(self, item):
+        raise NotImplementedError
+
+    def switch_view(self, button):
+        pass
+
+class ClassicController(ControllerAbstract):
     def __init__(self, model, view):
+        super().__init__()
         self.app = QApplication(sys.argv)
         print('Initialize Controller')
         self.model = model
-        self.normal_view = NormalInterface()
+        self.normal_view = NormalInterface(self)
         self.normal_view.show()
 
     def add_item(self, item):
@@ -33,7 +43,7 @@ class InterfaceController:
         self.normal_view.add_button(normal_button)
 
         # Advanced View
-        advanced_view = AdvancedInterface()
+        advanced_view = AdvancedInterface(self)
         advanced_button = ToolButton(advanced_view, item)
         advanced_view.add_button(advanced_button)
 
@@ -73,3 +83,4 @@ class InterfaceController:
     def set_source_code(self, item, view):
         source_code = open(item.get_module_path(), 'r')
         view.tab.text_edit_source.set_text(source_code.read())
+

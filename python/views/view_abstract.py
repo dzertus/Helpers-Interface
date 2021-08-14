@@ -5,7 +5,7 @@ from PySide2 import QtCore
 
 from views.classes import Tab
 
-class InterfaceFactory(QtWidgets.QMainWindow):
+class InterfaceAbstract(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.central_widget = QtWidgets.QWidget(self)
@@ -38,9 +38,11 @@ class InterfaceFactory(QtWidgets.QMainWindow):
         raise NotImplementedError
 
 
-class NormalInterface(InterfaceFactory):
-    def __init__(self):
+class NormalInterface(InterfaceAbstract):
+    def __init__(self, controller):
         super().__init__()
+        self.controller = controller
+
         self.title = 'Maya Helpers Interface'
         self.set_window_title()
 
@@ -71,9 +73,11 @@ class NormalInterface(InterfaceFactory):
         return self.pos()
 
 
-class AdvancedInterface(InterfaceFactory):
-    def __init__(self):
+class AdvancedInterface(InterfaceAbstract):
+    def __init__(self, controller):
         super().__init__()
+        self.controller = controller
+
         self.title = 'Maya Helpers Interface Advanced'
 
         self.set_window_title()

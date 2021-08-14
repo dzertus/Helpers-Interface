@@ -3,11 +3,12 @@ Parsing Method for modules collection
 """
 import os
 
+
 class PathParser:
     def __init__(self, path):
         if path is None:
             return
-        if os.path.exists(path) == False:
+        if os.path.exists(path) is False:
             if path is not None:
                 raise OSError('Path does not exist')
 
@@ -38,4 +39,3 @@ class PathParser:
         :return: (str)
         """
         return [os.path.join(self.path, m_file) for m_file in self.files if not m_file.startswith('__')]
-
