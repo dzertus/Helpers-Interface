@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from PySide2.QtGui import QPixmap, QIcon, Qt
+from PySide2.QtGui import QPixmap, Qt
 from PySide2.QtWidgets import QPushButton
 
 

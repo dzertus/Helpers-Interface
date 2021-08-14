@@ -3,7 +3,7 @@ import os
 import importlib.util
 
 from models.model_abstract import ScriptModel, ScriptAbstract
-from controllers.classes import InterfaceController
+from controllers.classes import ClassicController
 
 from environment import Env
 from data_parsers.path_parser import PathParser
@@ -14,6 +14,7 @@ env.add_path_variable(name='MHI_PYTHON_PATH', path=r'C:\Users\youss\Documents\Gi
 MHI_PYTHON_PATH = os.environ.get('MHI_PYTHON_PATH')
 
 ###### PARSING SCRIPTS TO USE ######
+#TODO : Put all in parser
 parser = PathParser(None)
 
 native_source_path = os.path.join(MHI_PYTHON_PATH, 'scripts')
@@ -45,7 +46,7 @@ def main():
     view = None
 
     # Initialize Controller
-    controller = InterfaceController(model, view)
+    controller = ClassicController(model, view)
 
     for script in scripts:
         module_name = script.get_module_name()
