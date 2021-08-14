@@ -81,9 +81,6 @@ class ScriptAbstract:
     def get_icon(self):
         raise NotImplementedError
 
-    def get_doc(self):
-        pass
-
     def get_module_name(self):
         """
         Script module base name

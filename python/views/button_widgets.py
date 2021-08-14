@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-from PySide2 import QtGui
-from PySide2 import QtWidgets
+from PySide2.QtGui import QPixmap, QIcon, Qt
+from PySide2.QtWidgets import QPushButton
 
 
-class ToolButton(QtWidgets.QPushButton):
+class ToolButton(QPushButton):
     def __init__(self, parent, item):
         super().__init__()
         self.parent = parent
@@ -18,14 +18,14 @@ class ToolButton(QtWidgets.QPushButton):
         self.setToolTip(self.item.name)
 
         # Icon
-        pixmap = QtGui.QPixmap(self.item.icon)
-        icon = QtGui.QIcon(pixmap)
+        pixmap = QPixmap(self.item.icon)
+        icon = (pixmap)
         self.setIcon(icon)
 
     def mousePressEvent(self, QMouseEvent):
-        if QMouseEvent.button() == QtGui.Qt.LeftButton:
+        if QMouseEvent.button() == Qt.LeftButton:
             self.button_pressed()
-        elif QMouseEvent.button() == QtGui.Qt.RightButton:
+        elif QMouseEvent.button() == Qt.RightButton:
             self.switch_view()
 
     def button_pressed(self):

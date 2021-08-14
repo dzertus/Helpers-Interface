@@ -1,27 +1,27 @@
 #!/usr/bin/python3
 
-from PySide2 import QtGui
-from PySide2 import QtWidgets
-from PySide2 import QtCore
+from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget
+from PySide2.QtCore import Qt, QRegExp
 
-from views import text_widgets
+from views.text_widgets import DocTextEdit, SourceTextEdit
 
 
-class Tab(QtWidgets.QWidget):
+class Tab(QWidget):
     def __init__(self):
         super().__init__()
-        self.layout = QtWidgets.QVBoxLayout(self)
+        self.layout = QVBoxLayout(self)
 
         # Initialize tab
-        self.tabs = QtWidgets.QTabWidget()
+        self.tabs = QTabWidget()
         self.tabs.setStyleSheet("background-color: #36302E;"
                                 "border :1px solid ;")
 
         # Documentation Tab
-        self.doc_tab = QtWidgets.QWidget()
+        self.doc_tab = QWidget()
 
         # Source Tab
-        self.source_tab = QtWidgets.QWidget()
+        self.source_tab = QWidget()
 
         self.tabs.resize(300, 200)
 
@@ -30,15 +30,15 @@ class Tab(QtWidgets.QWidget):
         self.tabs.addTab(self.source_tab, "Source")
 
         # Doc Tab
-        self.doc_tab.layout = QtWidgets.QVBoxLayout(self)
-        self.text_edit_doc = text_widgets.DocTextEdit()
+        self.doc_tab.layout = QVBoxLayout(self)
+        self.text_edit_doc = DocTextEdit()
         self.text_edit_doc.setReadOnly(True)
         self.doc_tab.layout.addWidget(self.text_edit_doc)
         self.doc_tab.setLayout(self.doc_tab.layout)
 
         # Source Tab
-        self.source_tab.layout = QtWidgets.QVBoxLayout(self)
-        self.text_edit_source = text_widgets.SourceTextEdit()
+        self.source_tab.layout = QVBoxLayout(self)
+        self.text_edit_source = SourceTextEdit()
         self.text_edit_source.setReadOnly(True)
         self.source_tab.layout.addWidget(self.text_edit_source)
         self.source_tab.setLayout(self.source_tab.layout)
@@ -48,13 +48,13 @@ class Tab(QtWidgets.QWidget):
         self.setLayout(self.layout)
 
 
-class Highlighter(QtGui.QSyntaxHighlighter):
+class Highlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
         super(Highlighter, self).__init__(parent)
 
-        keyword_format = QtGui.QTextCharFormat()
-        keyword_format.setForeground(QtCore.Qt.green)
-        keyword_format.setFontWeight(QtGui.QFont.Bold)
+        keyword_format = QTextCharFormat()
+        keyword_format.setForeground(Qt.green)
+        keyword_format.setFontWeight(QFont.Bold)
 
         keyword_patterns = ["\\bchar\\b", "\\bclass\\b", "\\bconst\\b",
                             "\\bdouble\\b", "\\benum\\b", "\\bexplicit\\b", "\\bfriend\\b",
@@ -66,39 +66,39 @@ class Highlighter(QtGui.QSyntaxHighlighter):
                             "\\bunion\\b", "\\bunsigned\\b", "\\bvirtual\\b", "\\bvoid\\b",
                             "\\bvolatile\\b"]
 
-        self.highlightingRules = [(QtCore.QRegExp(pattern), keyword_format)
+        self.highlightingRules = [(QRegExp(pattern), keyword_format)
                                   for pattern in keyword_patterns]
 
-        class_format = QtGui.QTextCharFormat()
-        class_format.setFontWeight(QtGui.QFont.Bold)
-        class_format.setForeground(QtCore.Qt.green)
-        self.highlightingRules.append((QtCore.QRegExp("\\bQ[A-Za-z]+\\b"),
+        class_format = QTextCharFormat()
+        class_format.setFontWeight(QFont.Bold)
+        class_format.setForeground(Qt.green)
+        self.highlightingRules.append((QRegExp("\\bQ[A-Za-z]+\\b"),
                                        class_format))
 
-        single_line_comment_format = QtGui.QTextCharFormat()
-        single_line_comment_format.setForeground(QtCore.Qt.red)
-        self.highlightingRules.append((QtCore.QRegExp("//[^\n]*"),
+        single_line_comment_format = QTextCharFormat()
+        single_line_comment_format.setForeground(Qt.red)
+        self.highlightingRules.append((QRegExp("//[^\n]*"),
                                        single_line_comment_format))
 
-        self.multiLineCommentFormat = QtGui.QTextCharFormat()
-        self.multiLineCommentFormat.setForeground(QtCore.Qt.red)
+        self.multiLineCommentFormat = QTextCharFormat()
+        self.multiLineCommentFormat.setForeground(Qt.red)
 
-        quotation_format = QtGui.QTextCharFormat()
-        quotation_format.setForeground(QtCore.Qt.darkYellow)
-        self.highlightingRules.append((QtCore.QRegExp("\".*\""), quotation_format))
+        quotation_format = QTextCharFormat()
+        quotation_format.setForeground(Qt.darkYellow)
+        self.highlightingRules.append((QRegExp("\".*\""), quotation_format))
 
-        function_format = QtGui.QTextCharFormat()
+        function_format = QTextCharFormat()
         function_format.setFontItalic(True)
-        function_format.setForeground(QtCore.Qt.cyan)
-        self.highlightingRules.append((QtCore.QRegExp("\\b[A-Za-z0-9_]+(?=\\()"),
+        function_format.setForeground(Qt.cyan)
+        self.highlightingRules.append((QRegExp("\\b[A-Za-z0-9_]+(?=\\()"),
                                        function_format))
 
-        self.commentStartExpression = QtCore.QRegExp("/\\*")
-        self.commentEndExpression = QtCore.QRegExp("\\*/")
+        self.commentStartExpression = QRegExp("/\\*")
+        self.commentEndExpression = QRegExp("\\*/")
 
     def highlightBlock(self, text):
         for pattern, frmt in self.highlightingRules:
-            expression = QtCore.QRegExp(pattern)
+            expression = QRegExp(pattern)
             index = expression.indexIn(text)
             while index >= 0:
                 length = expression.matchedLength()

@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 
-from PySide2 import QtGui
-from PySide2 import QtWidgets
+from PySide2.QtGui import QColor
+from PySide2.QtWidgets import QTextEdit
 
 from views import classes
 
 
-class TextEditAbstract(QtWidgets.QTextEdit):
+class TextEditAbstract(QTextEdit):
     def __init__(self):
         super().__init__()
-        self.text_color = QtGui.QColor('grey')
+        self.text_color = QColor('grey')
         self.setTextColor(self.text_color)
 
     def set_text(self, text):

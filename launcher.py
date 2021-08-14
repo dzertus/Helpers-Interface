@@ -2,14 +2,11 @@ import sys
 import os
 import importlib.util
 
-from PySide2 import QtWidgets
-
-from models import model_abstract
-from views import view_abstract
-from controllers import controller_abstract
+from models.model_abstract import ScriptModel, ScriptAbstract
+from controllers.classes import InterfaceController
 
 from environment import Env
-from data_parsers import path_parser
+from data_parsers.path_parser import PathParser
 
 ###### ENVIRONMENT VARIABLES SETTING ######
 env = Env()
@@ -17,7 +14,7 @@ env.add_path_variable(name='MHI_PYTHON_PATH', path=r'C:\Users\youss\Documents\Gi
 MHI_PYTHON_PATH = os.environ.get('MHI_PYTHON_PATH')
 
 ###### PARSING SCRIPTS TO USE ######
-parser = path_parser.PathParser(None)
+parser = PathParser(None)
 
 native_source_path = os.path.join(MHI_PYTHON_PATH, 'scripts')
 source_paths = list()
@@ -30,7 +27,7 @@ for source_path in source_paths:
 
 scripts = []
 for module_path in modules_paths:
-    script = model_abstract.ScriptAbstract(module_path)
+    script = ScriptAbstract(module_path)
     module_name = script.get_module_name()
     spec = importlib.util.spec_from_file_location(module_name, module_path)
     module = importlib.util.module_from_spec(spec)
@@ -42,22 +39,20 @@ for module_path in modules_paths:
 ###### MAIN  ######
 def main():
     # Initialize Model
-    model = model_abstract.ScriptModel()
+    model = ScriptModel()
 
     # Initialize View/GUI
-    app = QtWidgets.QApplication(sys.argv)
-    view = view_abstract.InterfaceController()
+    view = None
 
     # Initialize Controller
-    controller = controller_abstract.Controller(model, view)
-
+    controller = InterfaceController(model, view)
 
     for script in scripts:
         module_name = script.get_module_name()
         module_path = script.get_module_path()
         controller.add_item(script)
 
-    controller.show_items()
-    sys.exit(app.exec_())
+    sys.exit(controller.app.exec_())
+
 
 main()
