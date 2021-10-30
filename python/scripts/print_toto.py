@@ -6,6 +6,7 @@ from models import model_abstract
 class Script(model_abstract.ScriptAbstract):
     def __init__(self, path):
         super().__init__(path)
+        print('Install Print TOTO')
         self.path = path
         self.name = 'Print Toto'
         self.dcc = ['maya']

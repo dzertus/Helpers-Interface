@@ -38,4 +38,4 @@ class PathParser:
         Absolute path of the module
         :return: (str)
         """
-        return [os.path.join(self.path, m_file) for m_file in self.files if not m_file.startswith('__')]
+        return [m_file for m_file in self.files if not m_file.startswith('__')]

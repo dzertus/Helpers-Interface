@@ -20,6 +20,7 @@ class ControllerAbstract:
 class ClassicController(ControllerAbstract):
     def __init__(self, model, view):
         super().__init__()
+
         self.app = QApplication(sys.argv)
         print('Initialize Controller')
         self.model = model

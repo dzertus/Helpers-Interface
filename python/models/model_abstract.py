@@ -62,9 +62,10 @@ class ScriptAbstract:
     This class is parent class for the scripts eg : scripts/__template__.py
     """
 
-    def __init__(self, path):
-        self.path = path
-        self.module_name = os.path.splitext(os.path.basename(self.path))[0]
+    def __init__(self, source_path, name):
+        self.source_path = source_path
+        self.module_name = name
+        self.module_path = os.path.join(self.source_path, self.module_name)
         self.name = None
         self.dcc = None
         self.icon = None
@@ -73,15 +74,17 @@ class ScriptAbstract:
         raise NotImplementedError
 
     def get_name(self):
-        raise NotImplementedError
+        return type(self)
 
     def get_dcc(self):
         raise NotImplementedError
 
     def get_icon(self):
-        raise NotImplementedError
+        print('module name :', self.module_name)
+        self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
+                                 '{0}.{1}'.format(self.module_name, 'png'))
 
-    def get_module_name(self):
+    def get_module_basename(self):
         """
         Script module base name
         :return: (str)
@@ -93,4 +96,4 @@ class ScriptAbstract:
         Script module location
         :return: (str)
         """
-        return self.path
+        return self.module_path
