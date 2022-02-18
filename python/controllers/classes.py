@@ -76,7 +76,7 @@ class ClassicController(ControllerAbstract):
         passive_view.show()
 
     def set_documentation(self, item, view):
-        method_exists = getattr(self, "get_doc", None)
+        method_exists = getattr(item, "get_doc", None)
         if method_exists:
             documentation = item.get_doc()
             view.tab.text_edit_doc.set_text(documentation)
