@@ -15,27 +15,24 @@ from data_parsers.path_parser import PathParser
 
 ###### PARSING SCRIPTS TO USE ######
 #TODO : Put all in parser
-parser = PathParser(None)
+parser = PathParser()
 
 native_source_path = os.path.join(MHI_PYTHONPATH, 'scripts')
-source_paths = list()
-source_paths.append(native_source_path)
+source_paths = [native_source_path]
 
 scripts = []
 for source_path in source_paths:
-    parser.new_path(source_path)
+    parser.new_root(source_path)
     modules = parser.get_modules()
-    for module_name in modules:
-        script = ScriptAbstract(source_path, module_name)
-        module_name = script.module_name#.replace('.py', '')
-        module_path = script.module_path
-        print('Module Name : ', module_name)
-        print('Module Path : ', module_path)
-
+    module_root = modules['root']
+    modules_files = modules['files']
+    for file in modules_files:
         #TODO Python 2/3
-        spec = importlib.util.spec_from_file_location(module_name, module_path)
+        module_path = os.path.join(module_root, file)
+        spec = importlib.util.spec_from_file_location(file, module_path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
+        script = module.Script(module_root, file)
         scripts.append(script)
 
 

@@ -66,9 +66,9 @@ class ScriptAbstract:
         self.source_path = source_path
         self.module_name = name
         self.module_path = os.path.join(self.source_path, self.module_name)
-        self.name = None
-        self.dcc = None
-        self.icon = None
+        self.module_headname = os.path.splitext(self.module_name)[0]
+        self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
+                                 '{0}.{1}'.format(self.module_headname, 'png'))
 
     def run(self):
         raise NotImplementedError
@@ -80,9 +80,7 @@ class ScriptAbstract:
         raise NotImplementedError
 
     def get_icon(self):
-        print('module name :', self.module_name)
-        self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
-                                 '{0}.{1}'.format(self.module_name, 'png'))
+        pass
 
     def get_module_basename(self):
         """

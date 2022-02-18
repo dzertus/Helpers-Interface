@@ -5,37 +5,36 @@ import os
 
 
 class PathParser:
-    def __init__(self, path):
-        if path is None:
-            return
-        if os.path.exists(path) is False:
-            if path is not None:
-                raise OSError('Path does not exist')
 
-        self.path = self.new_path(path)
-        self.files = self.get_files()
-        self.modules = self.get_modules()
-
-    def new_path(self, path):
+    def new_root(self, root):
         """
         - Sets a new path
         - Refresh files with callback
         :param path: (str)
         :return: (str)
         """
-        self.path = path
-        self.files = self.get_files()
+        self.root = root
 
     def get_files(self):
         """
         - List of .py files
         :return: (str)
         """
-        return os.listdir(self.path)
+        return os.listdir(self.root)
 
     def get_modules(self):
         """
         Absolute path of the module
         :return: (str)
         """
-        return [m_file for m_file in self.files if not m_file.startswith('__')]
+
+        files = self.get_files()
+        modules = dict()
+        modules['root'] = self.root
+        modules['files'] = list()
+
+        for m_file in files:
+            if not m_file.startswith('__'):
+                modules['files'].append(m_file)
+        print('Modules ', modules)
+        return modules

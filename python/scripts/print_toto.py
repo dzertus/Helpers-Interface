@@ -4,14 +4,12 @@ import os
 from models import model_abstract
 
 class Script(model_abstract.ScriptAbstract):
-    def __init__(self, path):
-        super().__init__(path)
+    def __init__(self, source_path, name):
+        super().__init__(source_path, name)
         print('Install Print TOTO')
-        self.path = path
         self.name = 'Print Toto'
         self.dcc = ['maya']
-        self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
-                                 '{0}.{1}'.format(self.module_name, 'png'))
+        print('Icon : ', self.icon)
 
     def get_name(self):
         return type(self)
@@ -20,7 +18,7 @@ class Script(model_abstract.ScriptAbstract):
         return self.dcc
 
     def get_icon(self):
-        return self.icon
+        pass
 
     def get_doc(self):
         return 'This script prints toto'
