@@ -1,8 +1,12 @@
+#!/usr/bin/env python3
+
 #exec(open(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\launcher.py").read())
 import sys
 import os
 #TODO Python 2/3
 import importlib.util
+
+from PySide2 import QtWidgets
 
 # Adding MHI PYTHONPATH
 MHI_PYTHONPATH = os.environ.get('MHI_PYTHONPATH')
@@ -12,6 +16,7 @@ if not MHI_PYTHONPATH in sys.path:
 from models.model_abstract import ScriptModel, ScriptAbstract
 from controllers.classes import ClassicController
 from data_parsers.path_parser import PathParser
+from views import view_abstract
 
 ###### PARSING SCRIPTS TO USE ######
 #TODO : Put all in parser
@@ -39,21 +44,24 @@ for source_path in source_paths:
 ###### MAIN  ######
 def main():
     current_app = ''
-    # Initialize Model
+    print('Initializing Model')
     model = ScriptModel()
     print('Model Initialized')
 
-    # Initialize View/GUI
-    view = None
+    print('Initializing GUI')
+    app = QtWidgets.QApplication(sys.argv)
+    view = view_abstract.NormalInterface()
+    print('GUI Initialized')
 
-    # Initialize Controller
+    print('Initializing Controller')
     controller = ClassicController(model, view)
+    print('Controller Initialized')
+
 
     for script in scripts:
         #print(sys.executable)
         controller.add_item(script)
-
-    sys.exit(controller.app.exec_())
+    sys.exit(app.exec_())
 
 
 main()

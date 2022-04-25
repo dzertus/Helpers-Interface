@@ -18,7 +18,6 @@ class Model:
 
 
 class ScriptModel(Model):
-    print('Initialize Model')
     item_type = "script"
 
     def __init__(self, scripts=None):

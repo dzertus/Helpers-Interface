@@ -10,7 +10,7 @@ class ToolButton(QPushButton):
         self.parent = parent
         self.item = item
         self.advanced_view = None
-
+        self.advanced_mode = False
         self.setStyleSheet("background-color: #36302E;"
                            "border :2px solid ;")
         self.setMinimumSize(120, 40)
@@ -42,8 +42,8 @@ class ToolButton(QPushButton):
         Turn on advanced mode
         :return:
         """
-        # TODO : Refactor : Remove instance dependency (Call it from the controller instead of this method)
-        self.parent.controller.switch_view(self)
+        self.parent.switch_view(self)
+        self.advanced_mode = 1 - self.advanced_mode
 
     def set_advanced_view(self, view):
         self.advanced_view = view
