@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 
-import sys
-
-from PySide2.QtWidgets import QApplication
-
 from views.view_abstract import NormalInterface, AdvancedInterface
 from views.button_widgets import ToolButton
+from third_party.errors import *
 
 class ClassicController():
     def __init__(self, model, view):
@@ -25,6 +22,17 @@ class ClassicController():
         source_code = open(item.get_module_path(), 'r')
         view.tab.text_edit_source.set_text(source_code.read())
 
+    def create_button(self, item):
+        button = ToolButton(self, item)
+        return button
+
+    def create_advanced_view(self, button):
+        advanced_view = AdvancedInterface()
+        advanced_view.add_button(button)
+        button.set_advanced_view(advanced_view)
+        self.set_documentation(button.item, advanced_view)
+        self.set_source_code(button.item, advanced_view)
+
     def add_item(self, item):
         self.model.add(item)
         self.add_button(item)
@@ -36,48 +44,22 @@ class ClassicController():
         :param item: (model_abstract.ScriptAbstract)
         :return:
         """
-        # Normal View Button
-        tool_button = ToolButton(self, item)
+        # Create button
+        tool_button = self.create_button(item)
         self.normal_view.add_button(tool_button)
-
-        # Advanced View
-        advanced_view = AdvancedInterface()
-        advanced_view.add_button(tool_button)
-
-        tool_button.set_advanced_view(advanced_view)
-        self.set_documentation(item, advanced_view)
-        self.set_source_code(item, advanced_view)
 
     def switch_view(self, button):
         print('switch')
-        if button.advanced_mode == True:
+        # Switch to advanced view
+        if button.advanced_mode == False:
+            self.normal_view.hide()
+            if button.advanced_view is None:
+                self.create_advanced_view(button)
+                button.advanced_view.show()
+            else:
+                raise ViewNotFoundError
+        # Switch to normal view
+        else:
             button.advanced_view.hide()
             self.normal_view.show()
-        else:
-            self.normal_view.hide()
-            button.advanced_view.show()
 
-
-    # def get_active_view(self, button):
-    #     # TODO : Refactor
-    #     active_view = None
-    #     if isinstance(button.parent, NormalInterface):
-    #         active_view = self.normal_view
-    #     elif isinstance(button.parent, AdvancedInterface):
-    #         active_view = button.advanced_view
-    #     return active_view
-    #
-    # def switch_view(self, button):
-    #     # TODO : Refactor
-    #     active_view = self.get_active_view(button)
-    #     passive_view = self.normal_view
-    #     if active_view == self.normal_view:
-    #         passive_view = button.advanced_view
-    #
-    #     pos = button.parent.get_pos()
-    #     active_view.hide()
-    #     passive_view.move(pos.x(), pos.y())
-    #     passive_view.show()
-
-    def show_view(self):
-        pass

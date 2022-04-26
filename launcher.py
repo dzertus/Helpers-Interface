@@ -49,6 +49,7 @@ def main():
     print('Model Initialized')
 
     print('Initializing GUI')
+    # print(sys.executable)
     app = QtWidgets.QApplication(sys.argv)
     view = view_abstract.NormalInterface()
     print('GUI Initialized')
@@ -59,7 +60,6 @@ def main():
 
 
     for script in scripts:
-        #print(sys.executable)
         controller.add_item(script)
     sys.exit(app.exec_())
 
