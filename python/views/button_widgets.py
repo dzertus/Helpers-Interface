@@ -43,7 +43,7 @@ class ToolButton(QPushButton):
         :return:
         """
         self.parent.switch_view(self)
-        self.advanced_mode = 1 - self.advanced_mode
 
     def set_advanced_view(self, view):
         self.advanced_view = view
+

@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
+import logging
+
 from views.view_abstract import NormalInterface, AdvancedInterface
 from views.button_widgets import ToolButton
 from third_party.errors import *
+
+logger = logging.getLogger(__name__)
 
 class ClassicController():
     def __init__(self, model, view):
@@ -10,6 +14,8 @@ class ClassicController():
         print('Initialize Controller')
         self.model = model
         self.normal_view = view
+
+    def run_ui(self):
         self.normal_view.show()
 
     def set_documentation(self, item, view):
@@ -30,6 +36,7 @@ class ClassicController():
         advanced_view = AdvancedInterface()
         advanced_view.add_button(button)
         button.set_advanced_view(advanced_view)
+        advanced_view.setWindowTitle(button.item.name)
         self.set_documentation(button.item, advanced_view)
         self.set_source_code(button.item, advanced_view)
 
@@ -51,15 +58,17 @@ class ClassicController():
     def switch_view(self, button):
         print('switch')
         # Switch to advanced view
+        print('Advances Mode State : '),
         if button.advanced_mode == False:
             self.normal_view.hide()
             if button.advanced_view is None:
                 self.create_advanced_view(button)
-                button.advanced_view.show()
             else:
                 raise ViewNotFoundError
+            button.advanced_view.show_ui()
+            button.advanced_mode = True
         # Switch to normal view
         else:
             button.advanced_view.hide()
-            self.normal_view.show()
-
+            self.normal_view.show_ui()
+            button.advanced_mode = False

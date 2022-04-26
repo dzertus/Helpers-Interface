@@ -3,6 +3,7 @@
 #exec(open(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\launcher.py").read())
 import sys
 import os
+import logging
 #TODO Python 2/3
 import importlib.util
 
@@ -17,6 +18,31 @@ from models.model_abstract import ScriptModel, ScriptAbstract
 from controllers.classes import ClassicController
 from data_parsers.path_parser import PathParser
 from views import view_abstract
+
+
+# create logger
+logger = logging.getLogger('simple_example')
+logger.setLevel(logging.DEBUG)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
+
+# 'application' code
+logger.debug('debug message')
+logger.info('info message')
+logger.warning('warn message')
+logger.error('error message')
+logger.critical('critical message')
 
 ###### PARSING SCRIPTS TO USE ######
 #TODO : Put all in parser
@@ -40,9 +66,11 @@ for source_path in source_paths:
         script = module.Script(module_root, file)
         scripts.append(script)
 
-
-###### MAIN  ######
 def main():
+
+
+    logger.info('...Init App')
+
     current_app = ''
     print('Initializing Model')
     model = ScriptModel()
@@ -57,11 +85,15 @@ def main():
     print('Initializing Controller')
     controller = ClassicController(model, view)
     print('Controller Initialized')
+    controller.run_ui()
+    print('Ui ready')
 
 
     for script in scripts:
         controller.add_item(script)
+
     sys.exit(app.exec_())
+    logger.info('Running...')
+if __name__ == '__main__':
+    main()
 
-
-main()

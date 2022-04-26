@@ -44,20 +44,28 @@ class NormalInterface(InterfaceAbstract):
     def __init__(self):
         super().__init__()
         self.views.append(self)
-        self.title = 'Maya Helpers Interface'
+        self.title = 'Helpers Interface'
         self.set_window_title()
         self.setFixedHeight(70)
 
         self.container_layout = QtWidgets.QGridLayout(self)
         self.container_layout.setDefaultPositioning(0, QtCore.Qt.Vertical)
         self.central_widget.setLayout(self.container_layout)
+        self.buttons = list()
+
+    def add_button(self, button):
+        """
+        Adds a button to the grid layout , will be visible to the viewer
+        :param item: (model_abstract.ScriptAbstract)
+        :return:
+        """
+        self.container_layout.addWidget(button)
+        self.buttons.append(button)
 
 class AdvancedInterface(InterfaceAbstract):
     def __init__(self):
         super().__init__()
         self.views.append(self)
-        self.title = 'Maya Helpers Interface Advanced'
-        self.set_window_title()
         self.resize(600, 400)
 
         self.container_layout = QtWidgets.QVBoxLayout(self)
@@ -67,3 +75,16 @@ class AdvancedInterface(InterfaceAbstract):
         self.container_layout.addWidget(self.tab)
 
         self.central_widget.setLayout(self.container_layout)
+        self.buttons = list()
+
+    def add_button(self, button):
+        """
+        Adds a button to the grid layout , will be visible to the viewer
+        :param item: (model_abstract.ScriptAbstract)
+        :return:
+        """
+        self.container_layout.addWidget(button)
+        self.buttons.append(button)
+
+
+

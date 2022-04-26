@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 from models import model_abstract
 
 class Script(model_abstract.ScriptAbstract):
