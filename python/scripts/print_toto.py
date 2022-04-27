@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from models import model_abstract
+from models import model_cls
 
-class Script(model_abstract.ScriptAbstract):
+class Script(model_cls.ScriptAbstract):
     def __init__(self, source_path, name):
         super().__init__(source_path, name)
         print('Install Print TOTO')

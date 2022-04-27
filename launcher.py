@@ -4,7 +4,7 @@
 import sys
 import os
 import logging
-#TODO Python 2/3
+#Todo : Python 2/3
 import importlib.util
 
 from PySide2 import QtWidgets
@@ -14,38 +14,19 @@ MHI_PYTHONPATH = os.environ.get('MHI_PYTHONPATH')
 if not MHI_PYTHONPATH in sys.path:
     sys.path.insert(0, MHI_PYTHONPATH)
 
-from models.model_abstract import ScriptModel, ScriptAbstract
-from controllers.classes import ClassicController
+from models.model_cls import ScriptModel, ScriptAbstract
+from handlers.handler_cls import Handler
 from data_parsers.path_parser import PathParser
-from views import view_abstract
+from ui import view_cls
+from log import log_cls
+
+# Logger
+log_cls.run_logger()
+logger = logging.getLogger('baseLogger')
 
 
-# create logger
-logger = logging.getLogger('simple_example')
-logger.setLevel(logging.DEBUG)
-
-# create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-
-# create formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# add formatter to ch
-ch.setFormatter(formatter)
-
-# add ch to logger
-logger.addHandler(ch)
-
-# 'application' code
-logger.debug('debug message')
-logger.info('info message')
-logger.warning('warn message')
-logger.error('error message')
-logger.critical('critical message')
-
-###### PARSING SCRIPTS TO USE ######
-#TODO : Put all in parser
+logger.debug('Parsing scripts data')
+#Todo : Move to parser
 parser = PathParser()
 
 native_source_path = os.path.join(MHI_PYTHONPATH, 'scripts')
@@ -58,7 +39,7 @@ for source_path in source_paths:
     module_root = modules['root']
     modules_files = modules['files']
     for file in modules_files:
-        #TODO Python 2/3
+        #Todo : Python 2/3
         module_path = os.path.join(module_root, file)
         spec = importlib.util.spec_from_file_location(file, module_path)
         module = importlib.util.module_from_spec(spec)
@@ -67,33 +48,33 @@ for source_path in source_paths:
         scripts.append(script)
 
 def main():
-
-
     logger.info('...Init App')
 
+    #Todo : Get current app to init app var
     current_app = ''
-    print('Initializing Model')
+    logger.debug('Initializing Model')
     model = ScriptModel()
-    print('Model Initialized')
+    logger.debug('Model Initialized')
 
-    print('Initializing GUI')
+    logger.debug('Initializing GUI')
     # print(sys.executable)
     app = QtWidgets.QApplication(sys.argv)
-    view = view_abstract.NormalInterface()
-    print('GUI Initialized')
+    view = view_cls.DefaultInterface()
+    logger.debug('GUI Initialized')
 
-    print('Initializing Controller')
-    controller = ClassicController(model, view)
-    print('Controller Initialized')
+    logger.debug('Initializing Controller')
+    controller = Handler(model, view)
+    logger.debug('Controller Initialized')
     controller.run_ui()
-    print('Ui ready')
-
+    logger.info('Ui ready')
 
     for script in scripts:
         controller.add_item(script)
+        logger.debug('"{}" script added'.format(script.name))
 
-    sys.exit(app.exec_())
     logger.info('Running...')
+    sys.exit(app.exec_())
+
 if __name__ == '__main__':
     main()
 

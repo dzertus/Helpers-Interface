@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
 """
-Replace #TODO
+Replace # Todo : Fill Todo list and rename the file
 """
 
 import os
-from models import model_abstract
+from models import model_cls
 
 
-class Script(model_abstract.ScriptAbstract):
+class Script(model_cls.ScriptAbstract):
     def __init__(self, path):
         super().__init__(path)
         self.path = path
-        self.name = 'Template Script'  # TODO
-        self.dcc = [None]  # TODO eg : [os, maya]
-        self.icon = os.path.join(r"[PATH]", self.module_name)  # TODO
+        self.name = 'Template Script'  # Todo : Fill with name
+        self.dcc = [None]  # Todo : Fill list , eg : [os, maya]
+        self.icon = os.path.join(r"[PATH]", self.module_name)  # Todo : Replace [PATH] by path to icon
 
     def get_name(self):
         """
@@ -41,5 +41,5 @@ class Script(model_abstract.ScriptAbstract):
         """
         Script Main Function
         """
-        # TODO
+        # Todo : Fill with your script
         return None

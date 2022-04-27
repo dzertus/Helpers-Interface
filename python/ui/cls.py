@@ -4,7 +4,7 @@ from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont
 from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget
 from PySide2.QtCore import Qt, QRegExp
 
-from views.text_widgets import DocTextEdit, SourceTextEdit
+from ui.txt_cls import DocTextEdit, SourceTextEdit
 
 
 class Tab(QWidget):

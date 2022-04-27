@@ -5,7 +5,7 @@ from itertools import cycle
 from PySide2 import QtWidgets
 from PySide2 import QtCore
 
-from views.classes import Tab
+from ui.cls import Tab
 
 class InterfaceAbstract(QtWidgets.QMainWindow):
     views = list()
@@ -40,7 +40,7 @@ class InterfaceAbstract(QtWidgets.QMainWindow):
     def get_pos(self):
         return self.pos()
 
-class NormalInterface(InterfaceAbstract):
+class DefaultInterface(InterfaceAbstract):
     def __init__(self):
         super().__init__()
         self.views.append(self)

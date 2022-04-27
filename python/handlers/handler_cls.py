@@ -2,21 +2,22 @@
 
 import logging
 
-from views.view_abstract import NormalInterface, AdvancedInterface
-from views.button_widgets import ToolButton
+from ui.view_cls import DefaultInterface, AdvancedInterface
+from ui.btn_cls import ToolButton
 from third_party.errors import *
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('baseLogger')
 
-class ClassicController():
+class Handler():
     def __init__(self, model, view):
         super().__init__()
-        print('Initialize Controller')
+
+        logger.debug('Initialize Handler')
         self.model = model
-        self.normal_view = view
+        self.default_view = view
 
     def run_ui(self):
-        self.normal_view.show()
+        self.default_view.show()
 
     def set_documentation(self, item, view):
         method_exists = getattr(item, "get_doc", None)
@@ -53,14 +54,13 @@ class ClassicController():
         """
         # Create button
         tool_button = self.create_button(item)
-        self.normal_view.add_button(tool_button)
+        self.default_view.add_button(tool_button)
 
     def switch_view(self, button):
-        print('switch')
         # Switch to advanced view
-        print('Advances Mode State : '),
         if button.advanced_mode == False:
-            self.normal_view.hide()
+            logger.debug('Switch to Advanced with : {}'.format(button.item.name))
+            self.default_view.hide()
             if button.advanced_view is None:
                 self.create_advanced_view(button)
             else:
@@ -69,6 +69,7 @@ class ClassicController():
             button.advanced_mode = True
         # Switch to normal view
         else:
+            logger.debug('Switch to Normal with : {}'.format(button.item.name))
             button.advanced_view.hide()
-            self.normal_view.show_ui()
+            self.default_view.show_ui()
             button.advanced_mode = False
