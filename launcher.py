@@ -17,24 +17,24 @@ if not MHI_PYTHONPATH in sys.path:
 from models.model_cls import ScriptModel, ScriptAbstract
 from handlers.handler_cls import Handler
 from data_parsers.path_parser import PathParser
-from ui import view_cls
 from log import log_cls
 
-# Logger
+# Logger instance
 log_cls.run_logger()
-logger = logging.getLogger('baseLogger')
 
+
+logger = logging.getLogger('launcher')
 
 logger.debug('Parsing scripts data')
 #Todo : Move to parser
 parser = PathParser()
 
 native_source_path = os.path.join(MHI_PYTHONPATH, 'scripts')
-source_paths = [native_source_path]
+src_paths = [native_source_path]
 
 scripts = []
-for source_path in source_paths:
-    parser.new_root(source_path)
+for src_path in src_paths:
+    parser.new_root(src_path)
     modules = parser.get_modules()
     module_root = modules['root']
     modules_files = modules['files']
@@ -50,27 +50,20 @@ for source_path in source_paths:
 def main():
     logger.info('...Init App')
 
-    #Todo : Get current app to init app var
-    current_app = ''
-    logger.debug('Initializing Model')
     model = ScriptModel()
-    logger.debug('Model Initialized')
 
-    logger.debug('Initializing GUI')
-    # print(sys.executable)
+    # application
+    print(sys.executable)
+    current_app = ''
     app = QtWidgets.QApplication(sys.argv)
-    view = view_cls.DefaultInterface()
-    logger.debug('GUI Initialized')
 
-    logger.debug('Initializing Controller')
-    controller = Handler(model, view)
-    logger.debug('Controller Initialized')
-    controller.run_ui()
-    logger.info('Ui ready')
+    # handler
+    h = Handler(model)
+    h.run()
 
-    for script in scripts:
-        controller.add_item(script)
-        logger.debug('"{}" script added'.format(script.name))
+    for s in scripts:
+        h.add_item(s)
+        logger.debug('"{}" script added'.format(s.name))
 
     logger.info('Running...')
     sys.exit(app.exec_())

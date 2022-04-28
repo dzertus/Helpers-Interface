@@ -2,50 +2,30 @@
 
 import logging
 
-from ui.view_cls import DefaultInterface, AdvancedInterface
+from ui.view_cls import DefaultInterface
 from ui.btn_cls import ToolButton
+from ui.cls import WidgetStack
 from third_party.errors import *
 
-logger = logging.getLogger('baseLogger')
+logger = logging.getLogger('handler_cls')
 
 class Handler():
-    def __init__(self, model, view):
+    def __init__(self, model):
         super().__init__()
 
         logger.debug('Initialize Handler')
         self.model = model
-        self.default_view = view
-
-    def run_ui(self):
-        self.default_view.show()
-
-    def set_documentation(self, item, view):
-        method_exists = getattr(item, "get_doc", None)
-        if method_exists:
-            documentation = item.get_doc()
-            view.tab.text_edit_doc.set_text(documentation)
-
-    def set_source_code(self, item, view):
-        source_code = open(item.get_module_path(), 'r')
-        view.tab.text_edit_source.set_text(source_code.read())
-
-    def create_button(self, item):
-        button = ToolButton(self, item)
-        return button
-
-    def create_advanced_view(self, button):
-        advanced_view = AdvancedInterface()
-        advanced_view.add_button(button)
-        button.set_advanced_view(advanced_view)
-        advanced_view.setWindowTitle(button.item.name)
-        self.set_documentation(button.item, advanced_view)
-        self.set_source_code(button.item, advanced_view)
 
     def add_item(self, item):
-        self.model.add(item)
-        self.add_button(item)
+        """
+        Fill Model and Ui using Script Instance
+        :param item:
+        :return:
+        """
+        self.model.add(item) # Data model
+        self.add_btn(item) # Ui
 
-    def add_button(self, item):
+    def add_btn(self, item):
         """
         Creates button for the normal view
         Generates the advanced view for the button
@@ -53,23 +33,44 @@ class Handler():
         :return:
         """
         # Create button
-        tool_button = self.create_button(item)
-        self.default_view.add_button(tool_button)
+        btn = self.create_btn(item)
+        self.default_view.add_btn(btn)
 
-    def switch_view(self, button):
-        # Switch to advanced view
-        if button.advanced_mode == False:
-            logger.debug('Switch to Advanced with : {}'.format(button.item.name))
-            self.default_view.hide()
-            if button.advanced_view is None:
-                self.create_advanced_view(button)
-            else:
-                raise ViewNotFoundError
-            button.advanced_view.show_ui()
-            button.advanced_mode = True
-        # Switch to normal view
+    def create_btn(self, item):
+        """
+        Creates a button , creates adv view for the button and sets adv view attribute
+        :param item:
+        :return: ToolButton
+        """
+        btn = ToolButton()
+        btn.add_item(item)
+        btn.set_handler(self)
+        return btn
+
+    def gen_adv_view_for_btn(self, btn):
+        # advanced view
+        btn.gen_adv_view()
+        btn.adv_view.add_widget_stack(btn.widget_stack)
+        btn.set_advanced_view(btn.adv_view)
+
+    def switch_view(self, btn):
+        """
+        Switch between Default and Advanced views
+        :param btn: :ToolButton
+        :return:
+        """
+        if btn.adv_mod == False:
+            pass # Switch to advanced
         else:
-            logger.debug('Switch to Normal with : {}'.format(button.item.name))
-            button.advanced_view.hide()
-            self.default_view.show_ui()
-            button.advanced_mode = False
+            pass # Switch to normal
+
+    def run(self):
+        """
+        Run the main Ui
+        :return:
+        """
+        logger.debug('Initializing GUI')
+        self.default_view = DefaultInterface()
+        self.default_view.show()
+        logger.debug('GUI Initialized')
+

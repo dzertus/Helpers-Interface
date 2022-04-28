@@ -5,7 +5,7 @@ from itertools import cycle
 from PySide2 import QtWidgets
 from PySide2 import QtCore
 
-from ui.cls import Tab
+from ui.cls import Tab, WidgetStack
 
 class InterfaceAbstract(QtWidgets.QMainWindow):
     views = list()
@@ -17,13 +17,13 @@ class InterfaceAbstract(QtWidgets.QMainWindow):
                            "border :2px solid ;")
         self.set_central_widget()
 
-    def add_button(self, button):
+    def add_btn(self, btn):
         """
         Adds a button to the grid layout , will be visible to the viewer
         :param item: (model_abstract.ScriptAbstract)
         :return:
         """
-        self.container_layout.addWidget(button)
+        self.container_layout.addWidget(btn)
 
     def set_window_title(self):
         self.setWindowTitle(self.title)
@@ -51,20 +51,13 @@ class DefaultInterface(InterfaceAbstract):
         self.container_layout = QtWidgets.QGridLayout(self)
         self.container_layout.setDefaultPositioning(0, QtCore.Qt.Vertical)
         self.central_widget.setLayout(self.container_layout)
-        self.buttons = list()
-
-    def add_button(self, button):
-        """
-        Adds a button to the grid layout , will be visible to the viewer
-        :param item: (model_abstract.ScriptAbstract)
-        :return:
-        """
-        self.container_layout.addWidget(button)
-        self.buttons.append(button)
 
 class AdvancedInterface(InterfaceAbstract):
-    def __init__(self):
+    def __init__(self, data, btn):
         super().__init__()
+        self.data = data
+        self.btn = btn
+
         self.views.append(self)
         self.resize(600, 400)
 
@@ -75,16 +68,13 @@ class AdvancedInterface(InterfaceAbstract):
         self.container_layout.addWidget(self.tab)
 
         self.central_widget.setLayout(self.container_layout)
-        self.buttons = list()
 
-    def add_button(self, button):
-        """
-        Adds a button to the grid layout , will be visible to the viewer
-        :param item: (model_abstract.ScriptAbstract)
-        :return:
-        """
-        self.container_layout.addWidget(button)
-        self.buttons.append(button)
+    def set_documentation(self):
+        method_exists = getattr(self.data, "get_doc", None)
+        if method_exists:
+            documentation = self.data.get_doc()
+            self.tab.text_edit_doc.set_text(documentation)
 
-
-
+    def set_source_code(self):
+        src_code = open(self.data.get_module_path(), 'r')
+        self.tab.text_edit_source.set_text(src_code.read())

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QStackedWidget
 from PySide2.QtCore import Qt, QRegExp
 
 from ui.txt_cls import DocTextEdit, SourceTextEdit
@@ -46,7 +46,6 @@ class Tab(QWidget):
         # Add to Widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
-
 
 class Highlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
@@ -124,3 +123,12 @@ class Highlighter(QSyntaxHighlighter):
                            self.multiLineCommentFormat)
             start_index = self.commentStartExpression.indexIn(text,
                                                               start_index + comment_length)
+
+class WidgetStack(QStackedWidget):
+    def __init__(self):
+        super(WidgetStack, self).__init__()
+        self.layout = QVBoxLayout()
+
+    def add_widget(self, widget):
+        self.addWidget(widget)
+        widget.setLlayout(self.layout)
