@@ -20,9 +20,9 @@ loggers:
     handlers: [console, file]
     propagate: no
   handler_cls:
-    level: INFO
+    level: DEBUG
     handlers: [console, file]
     propagate: no
 root:
-  level: DEBUG
+  level: INFO
   handlers: [console]

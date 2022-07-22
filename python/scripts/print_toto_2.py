@@ -6,7 +6,7 @@ class Script(model_cls.ScriptAbstract):
     def __init__(self, source_path, name):
         super().__init__(source_path, name)
         print('Install Print TOTO')
-        self.name = 'Print Toto'
+        self.name = 'Print Toto 2'
         self.dcc = ['maya']
         print('Icon : ', self.icon_path)
 
@@ -26,4 +26,4 @@ class Script(model_cls.ScriptAbstract):
         """
         Script Main Function
         """
-        print('Hello it is Toto')
+        print('Hello it is Toto 2')

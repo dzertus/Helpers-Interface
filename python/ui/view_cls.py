@@ -5,11 +5,9 @@ from itertools import cycle
 from PySide2 import QtWidgets
 from PySide2 import QtCore
 
-from ui.cls import Tab, WidgetStack
+from ui.misc_widgets_cls import Tab, WidgetStack
 
 class InterfaceAbstract(QtWidgets.QMainWindow):
-    views = list()
-    views_cycle = cycle(views)
     def __init__(self):
         super().__init__()
         self.central_widget = QtWidgets.QWidget(self)
@@ -40,16 +38,19 @@ class InterfaceAbstract(QtWidgets.QMainWindow):
     def get_pos(self):
         return self.pos()
 
+    def switch_view(self, target):
+        target.hide_ui()
+        self.show_ui()
+
 class DefaultInterface(InterfaceAbstract):
     def __init__(self):
         super().__init__()
-        self.views.append(self)
         self.title = 'Helpers Interface'
         self.set_window_title()
         self.setFixedHeight(70)
 
-        self.container_layout = QtWidgets.QGridLayout(self)
-        self.container_layout.setDefaultPositioning(0, QtCore.Qt.Vertical)
+        self.container_layout = QtWidgets.QHBoxLayout(self)
+        # self.container_layout.setDefaultPositioning(0, QtCore.Qt.Vertical)
         self.central_widget.setLayout(self.container_layout)
 
 class AdvancedInterface(InterfaceAbstract):
@@ -58,7 +59,6 @@ class AdvancedInterface(InterfaceAbstract):
         self.data = data
         self.btn = btn
 
-        self.views.append(self)
         self.resize(600, 400)
 
         self.container_layout = QtWidgets.QVBoxLayout(self)

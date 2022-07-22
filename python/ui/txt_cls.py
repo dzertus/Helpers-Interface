@@ -3,7 +3,7 @@
 from PySide2.QtGui import QColor
 from PySide2.QtWidgets import QTextEdit
 
-from ui import cls
+from ui import misc_widgets_cls
 
 
 class TextEditAbstract(QTextEdit):
@@ -29,7 +29,7 @@ class SourceTextEdit(TextEditAbstract):
         super().__init__()
 
         # Set highlighter
-        self.highlighter = cls.Highlighter(self.document())
+        self.highlighter = misc_widgets_cls.Highlighter(self.document())
 
     def set_text(self, text):
         self.setPlainText(text)

@@ -35,7 +35,7 @@ class Script(model_cls.ScriptAbstract):
         Icon Path
         :return: (str)
         """
-        return self.icon
+        return self.icon_path
 
     def run(self):
         """

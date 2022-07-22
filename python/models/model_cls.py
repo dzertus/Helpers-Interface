@@ -66,7 +66,7 @@ class ScriptAbstract:
         self.module_name = name
         self.module_path = os.path.join(self.source_path, self.module_name)
         self.module_headname = os.path.splitext(self.module_name)[0]
-        self.icon = os.path.join(r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\icons",
+        self.icon_path = os.path.join(r"{0}\icons".format(os.environ.get('MHI_PYTHONPATH')),
                                  '{0}.{1}'.format(self.module_headname, 'png'))
 
     def run(self):

@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 from PySide2.QtGui import QPixmap, Qt
-from PySide2.QtWidgets import QPushButton
+from PySide2.QtWidgets import QPushButton, QStyleOptionButton, QStyle
+from PySide2.QtCore import QPoint, QPointF
 
 from ui import view_cls
 
@@ -24,7 +25,7 @@ class ToolButton(QPushButton):
     def add_item(self, item):
         self.item = item
         self.setToolTip(self.item.name)
-        pixmap = QPixmap(self.item.icon)
+        pixmap = QPixmap(self.item.icon_path)
         icon = (pixmap)
         self.setIcon(icon)
 

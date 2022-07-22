@@ -4,8 +4,6 @@ import logging
 
 from ui.view_cls import DefaultInterface
 from ui.btn_cls import ToolButton
-from ui.cls import WidgetStack
-from third_party.errors import *
 
 logger = logging.getLogger('handler_cls')
 
@@ -15,6 +13,7 @@ class Handler():
 
         logger.debug('Initialize Handler')
         self.model = model
+        self.active_view = None
 
     def add_item(self, item):
         """
@@ -34,6 +33,7 @@ class Handler():
         """
         # Create button
         btn = self.create_btn(item)
+        self.gen_adv_view_for_btn(btn)
         self.default_view.add_btn(btn)
 
     def create_btn(self, item):
@@ -48,10 +48,21 @@ class Handler():
         return btn
 
     def gen_adv_view_for_btn(self, btn):
+        """
+        Generate advanced view for the button
+        :param btn:
+        """
         # advanced view
         btn.gen_adv_view()
-        btn.adv_view.add_widget_stack(btn.widget_stack)
         btn.set_advanced_view(btn.adv_view)
+        print('Button adv view {0}'.format(btn.adv_view))
+
+    def set_active_view(self, view):
+        """
+        Stores the current active view into active_view variable
+        :param view:
+        """
+        self.active_view = view
 
     def switch_view(self, btn):
         """
@@ -59,10 +70,20 @@ class Handler():
         :param btn: :ToolButton
         :return:
         """
-        if btn.adv_mod == False:
-            pass # Switch to advanced
+        print('switch view')
+        logger.debug('Right Click on : {}'.format(btn.item.name))
+        logger.debug('Active view current instance : {}'.format(type(self.active_view)))
+        current_btn_index = self.default_view.container_layout.indexOf(btn)
+        print(current_btn_index)
+
+        if isinstance(self.active_view, DefaultInterface):
+            btn.adv_view.switch_view(self.default_view)
+            btn.adv_view.add_btn(btn)
+            self.set_active_view(btn.adv_view)
         else:
-            pass # Switch to normal
+            self.default_view.switch_view(btn.adv_view)
+            self.default_view.container_layout.insertWidget(current_btn_index, btn)
+            self.set_active_view(self.default_view)
 
     def run(self):
         """
@@ -72,5 +93,5 @@ class Handler():
         logger.debug('Initializing GUI')
         self.default_view = DefaultInterface()
         self.default_view.show()
+        self.set_active_view(self.default_view)
         logger.debug('GUI Initialized')
-

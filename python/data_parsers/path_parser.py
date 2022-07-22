@@ -8,16 +8,16 @@ class PathParser:
 
     def new_root(self, root):
         """
-        - Sets a new path
-        - Refresh files with callback
-        :param path: (str)
+        Sets a new path
+        Refresh files with callback
+        :param root: (str)
         :return: (str)
         """
         self.root = root
 
     def get_files(self):
         """
-        - List of .py files
+        List of .py files
         :return: (str)
         """
         return os.listdir(self.root)
