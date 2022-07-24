@@ -61,13 +61,12 @@ class ScriptAbstract:
     This class is parent class for the scripts eg : scripts/__template_to_copy__.py
     """
 
-    def __init__(self, source_path, name):
+    def __init__(self, source_path, script_data):
         self.source_path = source_path
-        self.module_name = name
-        self.module_path = os.path.join(self.source_path, self.module_name)
-        self.module_headname = os.path.splitext(self.module_name)[0]
-        self.icon_path = os.path.join(r"{0}\icons".format(os.environ.get('MHI_PYTHONPATH')),
-                                 '{0}.{1}'.format(self.module_headname, 'png'))
+        self.module_name = script_data['module']
+        self.module_path = os.path.join(script_data['dir'], self.module_name)
+        self.module_headname = script_data['name']
+        self.icon_path = os.path.join(script_data['dir'], script_data['icon'])
 
     def run(self):
         raise NotImplementedError

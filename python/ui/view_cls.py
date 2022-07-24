@@ -5,7 +5,7 @@ from itertools import cycle
 from PySide2 import QtWidgets
 from PySide2 import QtCore
 
-from ui.misc_widgets_cls import Tab, WidgetStack
+from ui.misc_widgets_cls import Tab, MenuBar
 
 class InterfaceAbstract(QtWidgets.QMainWindow):
     def __init__(self):
@@ -13,7 +13,16 @@ class InterfaceAbstract(QtWidgets.QMainWindow):
         self.central_widget = QtWidgets.QWidget(self)
         self.setStyleSheet("background-color: #221E1D;"
                            "border :2px solid ;")
+        self.create_menu_bar()
         self.set_central_widget()
+
+
+    def create_menu_bar(self):
+        self.main_menu = self.menuBar()
+        sources_menu = self.main_menu.addMenu("&Sources")
+
+        self.help_menu = self.menuBar()
+        help_menu = self.help_menu.addMenu("&Help")
 
     def add_btn(self, btn):
         """
@@ -47,10 +56,9 @@ class DefaultInterface(InterfaceAbstract):
         super().__init__()
         self.title = 'Helpers Interface'
         self.set_window_title()
-        self.setFixedHeight(70)
-
+        self.setFixedHeight(100)
         self.container_layout = QtWidgets.QHBoxLayout(self)
-        # self.container_layout.setDefaultPositioning(0, QtCore.Qt.Vertical)
+
         self.central_widget.setLayout(self.container_layout)
 
 class AdvancedInterface(InterfaceAbstract):

@@ -1,0 +1,12 @@
+sources:
+- 'C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python\scripts'
+
+extentions:
+  icon_valid_ext:
+    - '.png'
+  module_valide_ext:
+    - '.py'
+  application_ext: 'hi'
+
+regex:
+  module_file_sanity_name : 'hi_(.*)\..*'

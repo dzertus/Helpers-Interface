@@ -16,12 +16,20 @@ handlers:
     filename: python/log/log.log
 loggers:
   launcher:
-    level: INFO
+    level: DEBUG
     handlers: [console, file]
     propagate: no
   handler_cls:
-    level: DEBUG
+    level: INFO
     handlers: [console, file]
+    propagate: no
+  icons_utils:
+    level: INFO
+    handlers: [console, file]
+    propagate: no
+  path_parser:
+    level: INFO
+    handlers: [ console, file ]
     propagate: no
 root:
   level: INFO

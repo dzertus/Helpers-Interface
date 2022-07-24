@@ -4,22 +4,19 @@ import os
 import logging
 import logging.config
 
-import yaml
-from yaml.loader import SafeLoader
+
+from utils import config_utils
+
+CONFIG_RELATIVE_PATH = 'python/log/log.yaml'
+LOG_RELATIVE_PATH = 'python/log/log.log'
 
 def run_logger():
     # init logger
-    config = load_config('python/log/log.yaml')
+    config = config_utils.load_yaml(CONFIG_RELATIVE_PATH)
     logging.config.dictConfig(config)
     global logger
     logger = logging.getLogger('baseLogger')
-    clear_log('python/log/log.log')
-
-def load_config(path):
-    with open(path) as f:
-        data = yaml.load(f, Loader=SafeLoader)
-        f.close()
-        return data
+    clear_log(LOG_RELATIVE_PATH)
 
 def clear_log(path):
     with open(path, 'w+') as f:

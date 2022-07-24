@@ -3,15 +3,14 @@
 from models import model_cls
 
 class Script(model_cls.ScriptAbstract):
-    def __init__(self, source_path, name):
-        super().__init__(source_path, name)
-        print('Install Print TOTO')
-        self.name = 'Print Toto'
+    def __init__(self, source_path, script_data):
+        super().__init__(source_path, script_data)
+        self.name = script_data['name']
+        print('Install {}'.format(self.name))
         self.dcc = ['maya']
-        print('Icon : ', self.icon_path)
 
     def get_name(self):
-        return type(self)
+        return self.name
 
     def get_dcc(self):
         return self.dcc
@@ -20,10 +19,10 @@ class Script(model_cls.ScriptAbstract):
         pass
 
     def get_doc(self):
-        return 'This script prints toto'
+        return 'This script prints Example'
 
     def run(self):
         """
         Script Main Function
         """
-        print('Hello it is Toto')
+        print('Example')
