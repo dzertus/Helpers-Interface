@@ -14,13 +14,13 @@ class PathParser:
         self.config = config
         self.sources = self.config['sources']
 
-    def add_source(self, source, config_path):
-        if not source in self.sources:
-            self.sources.append(source)
+    def add_source(self, new_src, config_path):
+        if not new_src in self.sources:
+            self.sources.append(new_src)
             self.config['sources'] = self.sources
             config_utils.save_yaml(config_path, self.config)
         else:
-            logger.info('{} already exists as a source, will not be added to config'.format(source))
+            logger.info('{} already exists as a source, will not be added to config'.format(new_src))
 
     def get_sources(self):
         return self.sources
@@ -77,6 +77,12 @@ class PathParser:
             return True
         else:
             return False
+
+    def is_source_already_exists(self, source):
+        exists = False
+        if source in self.sources:
+            exists = True
+        return exists
 
     def get_scripts_from_source(self, source):
         dir_data = dict()

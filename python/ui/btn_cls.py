@@ -19,8 +19,7 @@ class ToolButton(QPushButton):
         self.adv_mod = False
         self.setStyleSheet("background-color: #36302E;"
                            "border :2px solid ;")
-        self.setMinimumSize(120, 40)
-        self.setMaximumHeight(40)
+        self.setMinimumSize(40, 40)
 
     def add_item(self, item):
         self.item = item

@@ -6,14 +6,6 @@ from PySide2.QtCore import Qt, QRegExp
 
 from ui.txt_cls import DocTextEdit, SourceTextEdit
 
-class MenuBar(QMenuBar):
-    def __init__(self):
-        super().__init__()
-        self.menu_bar = QMenuBar()
-        source_menu = self.menu_bar.addMenu("&Sources")
-
-
-
 class Tab(QWidget):
     def __init__(self):
         super().__init__()

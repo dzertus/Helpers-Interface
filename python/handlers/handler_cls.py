@@ -85,6 +85,9 @@ class Handler():
             self.default_view.container_layout.insertWidget(current_btn_index, btn)
             self.set_active_view(self.default_view)
 
+    def open_sources_manager_dialog(self):
+        self.active_view.test()
+
     def run(self):
         """
         Run the main Ui

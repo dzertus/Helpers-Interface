@@ -35,7 +35,7 @@ def save_image(image, path):
     logger.debug('image saved to {}'.format(path))
 
 def main():
-    image_path = r"C:\Users\youss\Documents\GitHub\Maya-Helper-Interface\python\examples\print_example\print_example.png"
+    image_path = r"C:\Users\youss\Documents\GitHub\Maya-Helpers-Interface\python\examples\print_example\print_example.png"
     im = open_image(image_path)
     im = convert_to_rgb(im)
     data = get_image_data(im)

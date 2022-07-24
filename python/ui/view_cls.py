@@ -2,10 +2,9 @@
 
 from itertools import cycle
 
-from PySide2 import QtWidgets
-from PySide2 import QtCore
+from PySide2 import QtWidgets, QtCore
 
-from ui.misc_widgets_cls import Tab, MenuBar
+from ui.misc_widgets_cls import Tab
 
 class InterfaceAbstract(QtWidgets.QMainWindow):
     def __init__(self):
@@ -13,16 +12,7 @@ class InterfaceAbstract(QtWidgets.QMainWindow):
         self.central_widget = QtWidgets.QWidget(self)
         self.setStyleSheet("background-color: #221E1D;"
                            "border :2px solid ;")
-        self.create_menu_bar()
         self.set_central_widget()
-
-
-    def create_menu_bar(self):
-        self.main_menu = self.menuBar()
-        sources_menu = self.main_menu.addMenu("&Sources")
-
-        self.help_menu = self.menuBar()
-        help_menu = self.help_menu.addMenu("&Help")
 
     def add_btn(self, btn):
         """
@@ -57,9 +47,36 @@ class DefaultInterface(InterfaceAbstract):
         self.title = 'Helpers Interface'
         self.set_window_title()
         self.setFixedHeight(100)
+        self.setMinimumWidth(400)
         self.container_layout = QtWidgets.QHBoxLayout(self)
-
+        self.container_layout.setAlignment(QtCore.Qt.AlignHCenter)
         self.central_widget.setLayout(self.container_layout)
+
+        self.create_menu_bar()
+
+    def create_menu_bar(self):
+        self.main_menu = self.menuBar()
+        #Source
+        sources_menu = self.main_menu.addMenu("&Sources")
+
+        manage_sources_action = QtWidgets.QAction("Manage Sources..", self)
+        sources_menu.addAction(manage_sources_action)
+        manage_sources_action.triggered.connect(self.open_sources_manager)
+
+        #Help
+        self.help_menu = self.menuBar()
+        help_menu = self.help_menu.addMenu("&Help")
+
+        shorcuts_action = QtWidgets.QAction("Shortcuts", self)
+        help_menu.addAction(shorcuts_action)
+        shorcuts_action.triggered.connect(self.open_shortcuts)
+
+    def open_sources_manager(self):
+        self.sources_manager = SourcesManagerInterface()
+        self.sources_manager.show_ui()
+
+    def open_shortcuts(self):
+        print('Shortcuts Opened')
 
 class AdvancedInterface(InterfaceAbstract):
     def __init__(self, data, btn):
@@ -70,7 +87,7 @@ class AdvancedInterface(InterfaceAbstract):
         self.resize(600, 400)
 
         self.container_layout = QtWidgets.QVBoxLayout(self)
-        self.container_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.container_layout.setAlignment(QtCore.Qt.AlignHCenter)
 
         self.tab = Tab()
         self.container_layout.addWidget(self.tab)
@@ -86,3 +103,33 @@ class AdvancedInterface(InterfaceAbstract):
     def set_source_code(self):
         src_code = open(self.data.get_module_path(), 'r')
         self.tab.text_edit_source.set_text(src_code.read())
+
+class SourcesManagerInterface(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.central_widget = QtWidgets.QWidget(self)
+        self.setStyleSheet("background-color: #221E1D;"
+                           "border :2px solid ;")
+        self.set_central_widget()
+
+        self.container_layout = QtWidgets.QVBoxLayout(self)
+        self.container_layout.setAlignment(QtCore.Qt.AlignHCenter)
+
+    def set_window_title(self):
+        self.setWindowTitle('Sources Manager')
+
+    def set_central_widget(self):
+        self.setCentralWidget(self.central_widget)
+
+    def show_ui(self):
+        self.show()
+
+    def hide_ui(self):
+        self.hide()
+
+    def get_pos(self):
+        return self.pos()
+
+    def switch_view(self, target):
+        target.hide_ui()
+        self.show_ui()
