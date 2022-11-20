@@ -13,7 +13,7 @@ handlers:
     class: logging.FileHandler
     level: DEBUG
     formatter: default
-    filename: python/log/log.log
+    filename: ${HI_PYTHONPATH}/log/log.log
 loggers:
   launcher:
     level: DEBUG

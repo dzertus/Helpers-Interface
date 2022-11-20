@@ -26,7 +26,7 @@ class ScriptModel(Model):
         self.scripts = scripts
 
     def __iter__(self):
-        yield from self.scripts
+        yield self.scripts
 
     def add(self, script):
         """

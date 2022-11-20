@@ -1,11 +1,9 @@
 """
-Parsing Method for modules collection
+Parsing method for modules collection
 """
 import os
 import logging
 import re
-
-from utils import config_utils
 
 logger = logging.getLogger('path_parser')
 

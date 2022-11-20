@@ -4,7 +4,7 @@ from PySide2.QtGui import QPixmap, Qt
 from PySide2.QtWidgets import QPushButton, QStyleOptionButton, QStyle
 from PySide2.QtCore import QPoint, QPointF
 
-from ui import view_cls
+
 
 class ToolButton(QPushButton):
     """
@@ -14,7 +14,7 @@ class ToolButton(QPushButton):
         """
         :param item: Script: Script Object
         """
-        super().__init__()
+        super(ToolButton).__init__()
         self.adv_view = None
         self.adv_mod = False
         self.setStyleSheet("background-color: #36302E;"

@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
 from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QStackedWidget, QMenuBar
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QStackedWidget
 from PySide2.QtCore import Qt, QRegExp
 
-from ui.txt_cls import DocTextEdit, SourceTextEdit
+
 
 class Tab(QWidget):
     def __init__(self):
-        super().__init__()
+        super(Tab).__init__()
         self.layout = QVBoxLayout(self)
 
         # Initialize tab
@@ -30,14 +30,14 @@ class Tab(QWidget):
 
         # Doc Tab
         self.doc_tab.layout = QVBoxLayout(self)
-        self.text_edit_doc = DocTextEdit()
+        self.text_edit_doc = txt_cls.DocTextEdit()
         self.text_edit_doc.setReadOnly(True)
         self.doc_tab.layout.addWidget(self.text_edit_doc)
         self.doc_tab.setLayout(self.doc_tab.layout)
 
         # Source Tab
         self.source_tab.layout = QVBoxLayout(self)
-        self.text_edit_source = SourceTextEdit()
+        self.text_edit_source = txt_cls.SourceTextEdit()
         self.text_edit_source.setReadOnly(True)
         self.source_tab.layout.addWidget(self.text_edit_source)
         self.source_tab.setLayout(self.source_tab.layout)
@@ -45,6 +45,7 @@ class Tab(QWidget):
         # Add to Widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
+
 
 class Highlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
@@ -122,6 +123,7 @@ class Highlighter(QSyntaxHighlighter):
                            self.multiLineCommentFormat)
             start_index = self.commentStartExpression.indexIn(text,
                                                               start_index + comment_length)
+
 
 class WidgetStack(QStackedWidget):
     def __init__(self):

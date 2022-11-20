@@ -5,12 +5,13 @@ Replace # Todo : Fill Todo list and rename the file
 """
 
 import os
-from models import model_cls
 
+# from models import model_cls
+# reload(model_cls)
 
 class Script(model_cls.ScriptAbstract):
     def __init__(self, path):
-        super().__init__(path)
+        super(Script).__init__(path)
         self.path = path
         self.name = 'Template Script'  # Todo : Fill with name
         self.dcc = [None]  # Todo : Fill list , eg : [os, maya]

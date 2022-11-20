@@ -1,15 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 import logging
-
-from ui.view_cls import DefaultInterface
-from ui.btn_cls import ToolButton
 
 logger = logging.getLogger('handler_cls')
 
 class Handler():
     def __init__(self, model):
-        super().__init__()
+        super(Handler).__init__()
 
         logger.debug('Initialize Handler')
         self.model = model
@@ -42,7 +39,7 @@ class Handler():
         :param item:
         :return: ToolButton
         """
-        btn = ToolButton()
+        btn = btn_cls.ToolButton()
         btn.add_item(item)
         btn.set_handler(self)
         return btn
@@ -76,7 +73,7 @@ class Handler():
         current_btn_index = self.default_view.container_layout.indexOf(btn)
         print(current_btn_index)
 
-        if isinstance(self.active_view, DefaultInterface):
+        if isinstance(self.active_view, view_cls.DefaultInterface):
             btn.adv_view.switch_view(self.default_view)
             btn.adv_view.add_btn(btn)
             self.set_active_view(btn.adv_view)
@@ -94,7 +91,7 @@ class Handler():
         :return:
         """
         logger.debug('Initializing GUI')
-        self.default_view = DefaultInterface()
+        self.default_view = view_cls.DefaultInterface()
         self.default_view.show()
         self.set_active_view(self.default_view)
         logger.debug('GUI Initialized')

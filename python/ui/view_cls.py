@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 
-from itertools import cycle
-
 from PySide2 import QtWidgets, QtCore
 
-from ui.misc_widgets_cls import Tab
+
 
 class InterfaceAbstract(QtWidgets.QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(InterfaceAbstract).__init__()
         self.central_widget = QtWidgets.QWidget(self)
         self.setStyleSheet("background-color: #221E1D;"
                            "border :2px solid ;")
@@ -41,9 +39,10 @@ class InterfaceAbstract(QtWidgets.QMainWindow):
         target.hide_ui()
         self.show_ui()
 
+
 class DefaultInterface(InterfaceAbstract):
     def __init__(self):
-        super().__init__()
+        super(DefaultInterface).__init__()
         self.title = 'Helpers Interface'
         self.set_window_title()
         self.setFixedHeight(100)
@@ -78,9 +77,10 @@ class DefaultInterface(InterfaceAbstract):
     def open_shortcuts(self):
         print('Shortcuts Opened')
 
+
 class AdvancedInterface(InterfaceAbstract):
     def __init__(self, data, btn):
-        super().__init__()
+        super(AdvancedInterface).__init__()
         self.data = data
         self.btn = btn
 
@@ -89,7 +89,7 @@ class AdvancedInterface(InterfaceAbstract):
         self.container_layout = QtWidgets.QVBoxLayout(self)
         self.container_layout.setAlignment(QtCore.Qt.AlignHCenter)
 
-        self.tab = Tab()
+        self.tab = misc_widgets_cls.Tab()
         self.container_layout.addWidget(self.tab)
 
         self.central_widget.setLayout(self.container_layout)
@@ -104,9 +104,10 @@ class AdvancedInterface(InterfaceAbstract):
         src_code = open(self.data.get_module_path(), 'r')
         self.tab.text_edit_source.set_text(src_code.read())
 
+
 class SourcesManagerInterface(QtWidgets.QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(SourcesManagerInterface).__init__()
         self.central_widget = QtWidgets.QWidget(self)
         self.setStyleSheet("background-color: #221E1D;"
                            "border :2px solid ;")
