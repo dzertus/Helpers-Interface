@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 
 import yaml
 from yaml.loader import SafeLoader

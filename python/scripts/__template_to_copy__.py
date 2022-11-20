@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python2
 
 """
 Replace # Todo : Fill Todo list and rename the file

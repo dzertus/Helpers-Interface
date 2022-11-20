@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 
 #exec(open(r"C:\Users\youss\Documents\GitHub\Helpers-Interface\launcher.py").read())
 import sys

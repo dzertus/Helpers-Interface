@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 
 from PySide2.QtGui import QPixmap, Qt
 from PySide2.QtWidgets import QPushButton, QStyleOptionButton, QStyle

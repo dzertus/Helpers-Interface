@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+
 """
 Parsing method for modules collection
 """
