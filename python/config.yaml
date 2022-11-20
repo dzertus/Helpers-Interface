@@ -1,0 +1,10 @@
+extentions:
+  application_ext: hi
+  icon_valid_ext:
+  - .png
+  module_valide_ext:
+  - .py
+regex:
+  module_file_sanity_name: hi_(.*)\..*
+sources:
+- ${HI_PYTHONPATH}\scripts
