@@ -8,6 +8,7 @@ import importlib
 from utils import logs as ul
 
 from data_parsers import path, config as uc
+from utils import request
 
 ## Install Environment Variable
 # Gets HI_PYTHONPATH env variable , if not existing, asking user to add this env variable
@@ -53,6 +54,10 @@ def run(scripts=None):
 def main():
 
     cfg_path = os.path.join(HI_PYTHONPATH, 'config.yaml')
+    default_config_url = 'https://raw.githubusercontent.com/dzertus/Helpers-Interface/python2/python/config.yaml'
+    if not os.path.exists(cfg_path):
+        request.download_file(default_config_url, cfg_path)
+
     config_parser = uc.YamlParser(cfg_path)
     config = config_parser.load_yaml()
 
