@@ -1,13 +1,13 @@
 #!/usr/bin/python2
 
-#exec(open(r"C:\Users\youss\Documents\GitHub\Helpers-Interface\launcher.py").read())
 import sys
 import os
 import logging
-
-#Todo : Python 2
 import importlib
 
+from utils import logs as ul
+
+from data_parsers import path, config as uc
 
 ## Install Environment Variable
 # Gets HI_PYTHONPATH env variable , if not existing, asking user to add this env variable
@@ -28,16 +28,6 @@ if HI_PYTHONPATH == None:
 
 if not HI_PYTHONPATH in sys.path:
     sys.path.insert(0, HI_PYTHONPATH)
-
-## Setup Config File
-CONFIG_PATH = os.path.join(HI_PYTHONPATH, 'config.yaml')
-
-## Setup Logging
-# Logger instance
-logs.run_logger()
-logger = logging.getLogger('launcher')
-
-logger.debug('Parsing scripts data')
 
 def run(scripts=None):
     logger.info('...Init App')
@@ -61,27 +51,36 @@ def run(scripts=None):
     sys.exit(app.exec_())
 
 def main():
-    # Setup config
-    config = config_utils.load_yaml(CONFIG_PATH)
-    parser = path_parser.PathParser(config)
 
-    # Add native source path
-    native_source_path = os.path.join(HI_PYTHONPATH, 'scripts')
-    parser.add_source(native_source_path, CONFIG_PATH)
+    cfg_path = os.path.join(HI_PYTHONPATH, 'config.yaml')
+    config = uc.load_yaml(cfg_path)
+    # Setup config
+    main_config = config['main']
+    parser = path.PathParser(main_config)
     sources = parser.get_sources()
 
-    scripts = []
 
+    # Setup Logging
+    log_config = config['log']
+    logger_inst = ul.Log(__name__, log_config)
+    logger = logger_inst.logger
+    logger.debug('Parsing scripts data')
+
+
+
+    scripts = []
+    src_data = None
     for src in sources:
         if os.path.isdir(src):
-            dir_data = parser.get_scripts_from_source(src)
-
-        for script_name in dir_data.keys():
-            module_path = os.path.join(dir_data[script_name]['dir'], dir_data[script_name]['module'])
+            src_data = parser.get_scripts_from_source(src)
+        else:
+            raise OSError('Config not found, looking for:\n\t {}'.format(src))
+        for script_name in src_data.keys():
+            module_path = os.path.join(src_data[script_name]['dir'], src_data[script_name]['module'])
             spec = importlib.util.spec_from_file_location(script_name, module_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-            script = module.Script(src, dir_data[script_name])
+            script = module.Script(src, src_data[script_name])
             scripts.append(script)
 
     run(scripts)

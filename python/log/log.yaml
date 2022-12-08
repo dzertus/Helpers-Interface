@@ -13,9 +13,9 @@ handlers:
     class: logging.FileHandler
     level: DEBUG
     formatter: default
-    filename: ${HI_PYTHONPATH}/log/log.log
+    filename: log/log.log
 loggers:
-  launcher:
+  main:
     level: DEBUG
     handlers: [console, file]
     propagate: no

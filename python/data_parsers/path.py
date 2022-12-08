@@ -7,6 +7,8 @@ import os
 import logging
 import re
 
+from data_parsers import config as uc
+
 logger = logging.getLogger('path_parser')
 
 class PathParser:
@@ -18,7 +20,7 @@ class PathParser:
         if not new_src in self.sources:
             self.sources.append(new_src)
             self.config['sources'] = self.sources
-            config_utils.save_yaml(config_path, self.config)
+            uc.save_yaml(config_path, self.config)
         else:
             logger.info('{} already exists as a source, will not be added to config'.format(new_src))
 
