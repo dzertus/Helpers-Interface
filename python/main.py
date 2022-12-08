@@ -25,9 +25,9 @@ if HI_PYTHONPATH == None:
     print('Shutting down process')
     sys.exit()
 
-
 if not HI_PYTHONPATH in sys.path:
     sys.path.insert(0, HI_PYTHONPATH)
+
 
 def run(scripts=None):
     logger.info('...Init App')
@@ -53,28 +53,30 @@ def run(scripts=None):
 def main():
 
     cfg_path = os.path.join(HI_PYTHONPATH, 'config.yaml')
-    config = uc.load_yaml(cfg_path)
-    # Setup config
+    config_parser = uc.YamlParser(cfg_path)
+    config = config_parser.load_yaml()
+
+    # Setup main config
     main_config = config['main']
     parser = path.PathParser(main_config)
-    sources = parser.get_sources()
 
-
-    # Setup Logging
+    # Setup log config
     log_config = config['log']
     logger_inst = ul.Log(__name__, log_config)
+
     logger = logger_inst.logger
     logger.debug('Parsing scripts data')
 
-
-
+    # Gathering sources
+    logger.info('Gathering scripts locations')
+    sources = parser.get_sources()
     scripts = []
     src_data = None
     for src in sources:
         if os.path.isdir(src):
             src_data = parser.get_scripts_from_source(src)
         else:
-            raise OSError('Config not found, looking for:\n\t {}'.format(src))
+            raise OSError('Config not found, looking for:\n\t {}\nYou can download a new one here:\n[Put Link]'.format(src))
         for script_name in src_data.keys():
             module_path = os.path.join(src_data[script_name]['dir'], src_data[script_name]['module'])
             spec = importlib.util.spec_from_file_location(script_name, module_path)
