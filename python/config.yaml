@@ -6,8 +6,8 @@ main:
   regex:
     module_file_sanity_name: hi_(.*)\..*
   sources:
-    - !HI ${HI_PYTHONPATH}\scripts
-log:
+    - !HI ${HI_PYTHONPATH}\default_source
+logs:
   version: 1
   disable_existing_loggers: true
   formatters:
@@ -23,7 +23,7 @@ log:
       class: logging.FileHandler
       level: DEBUG
       formatter: default
-      filename: log/log.log
+      filename: logs/default.log
   loggers:
     main:
       level: DEBUG

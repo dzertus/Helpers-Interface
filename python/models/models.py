@@ -46,7 +46,7 @@ class ScriptModel(Model):
 
     def get(self, script):
         """
-        Get a particular script from a list of scripts
+        Get a particular script from a list of default_source
         :param script: (ScriptAbstract)
         :return: script (ScriptAbstract) or Does not exist Error
         """
@@ -58,7 +58,7 @@ class ScriptModel(Model):
 
 class ScriptAbstract:
     """
-    This class is parent class for the scripts eg : scripts/__template__.py
+    This class is parent class for the default_source eg : default_source/__template__.py
     """
 
     def __init__(self, source_path, script_data):

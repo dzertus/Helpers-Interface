@@ -4,6 +4,8 @@ import os
 import logging
 import logging.config
 
+
+
 class Log:
     def __init__(self, caller=None, config=None):
         self.caller = caller

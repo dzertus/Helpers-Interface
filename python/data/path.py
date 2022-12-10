@@ -7,7 +7,7 @@ import os
 import logging
 import re
 
-from data_parsers import config as uc
+from data import config as uc
 
 logger = logging.getLogger('path_parser')
 

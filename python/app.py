@@ -7,7 +7,7 @@ import importlib
 
 from utils import logs as ul
 
-from data_parsers import path, config as uc
+from data import path, config as uc
 from utils import request
 
 ## Install Environment Variable
@@ -22,7 +22,7 @@ if HI_PYTHONPATH == None:
           'https://github.com/dzertus/Helpers-Interface/blob/main/README.md#maya-helper-interface\n'
           )
 
-    # Shot down process because HI_PYTHONPATH env variable not found
+    # Shut down process because HI_PYTHONPATH env variable not found
     print('Shutting down process')
     sys.exit()
 
@@ -31,6 +31,7 @@ if not HI_PYTHONPATH in sys.path:
 
 
 def run(scripts=None):
+    logger.error()
     logger.info('...Init App')
 
     model = model_cls.ScriptModel()
@@ -66,15 +67,15 @@ def main():
     main_config = config['main']
     parser = path.PathParser(main_config)
 
-    # Setup log config
-    log_config = config['log']
+    # Setup logs config
+    log_config = config['logs']
     logger_inst = ul.Log(__name__, log_config)
 
     logger = logger_inst.logger
-    logger.debug('Parsing scripts data')
+    logger.debug('Parsing default_source data')
 
     # Gathering sources
-    logger.info('Gathering scripts locations')
+    logger.info('Gathering default_source locations')
     sources = parser.get_sources()
     scripts = []
     src_data = None
