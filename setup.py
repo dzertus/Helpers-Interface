@@ -1,24 +1,38 @@
-#!/usr/bin/python2
+from setuptools import setup, find_packages
+from pathlib import Path
+import os
 
-from setuptools import setup
-setup(
-    name='hi_helpers'
-    version='1.0',
-    author='Youssef Taktak',
-    description='Desktop application ui where we can add differents tools/helpers',
-    url='https://github.com/dzertus',
-    python_requires='>2.7',
-    packages=find_packages(include=['exampleproject', 'exampleproject.*']),
-    install_requires=[
-        'yaml',
-        'PIL'
-    ],
-    package_data={
-        'sample': ['sample_data.csv'],
-    },
-    entry_points={
-        'runners': [
-            'hihelpers=python:main',
-        ]
-    }
-)
+if __name__ == "__main__":
+    with Path(Path(__file__).parent, "README.md").open(encoding="utf-8") as file:
+        long_description = file.read()
+
+    def _read_reqs(relpath):
+        fullpath = os.path.join(os.path.dirname(__file__), relpath)
+        with open(fullpath) as f:
+            return [s.strip() for s in f.readlines() if (s.strip() and not s.startswith("#"))]
+
+    REQUIREMENTS = _read_reqs("requirements.txt")
+
+    setup(
+        name="helper_interface",
+        packages=find_packages(),
+        include_package_data=True,
+        version="1.0.0",
+        license="MIT",
+        description="helper interface",
+        long_description=long_description,
+        long_description_content_type="text/markdown",
+        author="Youssef Taktak",
+        author_email="dz.youssef.taktak@gmail.com",
+        url="https://github.com/dzertus/Helpers-Interface",
+        data_files=[(".", ["README.md"])],
+        keywords=["tools, scripts , helper"],
+        install_requires=REQUIREMENTS,
+        classifiers=[
+            "Development Status :: 4 - Beta",
+            "Intended Audience :: Any user",
+            "Topic :: Scientific/Engineering :: Artificial Intelligence",
+            "License :: OSI Approved :: MIT License",
+            "Programming Language :: Python :: 3.8",
+        ],
+    )

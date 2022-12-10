@@ -1,30 +1,30 @@
-#!/usr/bin/python2
-
+# TODO Make it a class
 import logging
 
 from PIL import Image
 
-
-
 logger = logging.getLogger('icons_utils')
-
 
 
 def open_image(image_path):
     image = Image.open(image_path)
     return image
 
+
 def get_image_data(image):
     data = image.getdata()
     return data
+
 
 def convert_to_rgb(image):
     image = image.convert("RGB")
     return image
 
-def convert_to_grayscale(image):
+
+def convert_to_grayscale():
     image = im.convert("L")
     return image
+
 
 def change_color(image_data, new_color):
     new_image_data = []
@@ -35,13 +35,16 @@ def change_color(image_data, new_color):
             new_image_data.append(item)
     return new_image_data
 
+
 def save_image(image, path):
     image.save(path)
-    print ('logging')
+    print('logging')
     logger.debug('image saved to {}'.format(path))
 
+
 def main():
-    image_path = r"C:\Users\youss\Documents\GitHub\Maya-Helpers-Interface\python\examples\print_example\print_example.png"
+    image_path = r"C:\Users\youss\Documents\GitHub\Maya-Helpers-Interface\python\examples\print_example\print_example" \
+                 r".png "
     im = open_image(image_path)
     im = convert_to_rgb(im)
     data = get_image_data(im)
@@ -52,6 +55,7 @@ def main():
     im.show()
     save_path = r"C:\Users\youss\Desktop\flower_image_altered.jpg"
     save_image(im, save_path)
+
 
 if __name__ == '__main__':
     main()

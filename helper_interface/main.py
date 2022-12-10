@@ -1,8 +1,5 @@
-#!/usr/bin/python2
-
 import sys
 import os
-import logging
 import importlib
 
 from utils import logs as ul
@@ -10,27 +7,40 @@ from utils import logs as ul
 from data import path, config as uc
 from utils import request
 
-## Install Environment Variable
-# Gets HI_PYTHONPATH env variable , if not existing, asking user to add this env variable
-HI_PYTHONPATH = os.environ.get('HI_PYTHONPATH')
-if HI_PYTHONPATH == None:
-    # Ask user to install HI_PYTHONPATH env variable
-    print('Please install this environment variable : \n '
-          'HI_PYTHONPATH as name \n'
-          'Source code python path : ..Helpers-Interface-initialize_python2/python as value\n'
-          'For more informations on how to install an environment variable according to your OS , visit this page : \n'
-          'https://github.com/dzertus/Helpers-Interface/blob/main/README.md#maya-helper-interface\n'
-          )
 
-    # Shut down process because HI_PYTHONPATH env variable not found
-    print('Shutting down process')
-    sys.exit()
 
-if not HI_PYTHONPATH in sys.path:
-    sys.path.insert(0, HI_PYTHONPATH)
+def install_env():
+    """
+
+    :return:
+    """
+    HINTERFACE = os.environ.get('HINTERFACE')
+    if HINTERFACE == None:
+        # Ask user to install HINTERFACE env variable
+        print('Please install this environment variable : \n'
+              'HINTERFACE as name \n'
+              'Source code python path : '
+              '..Helpers-Interface-initialize_python2/python as value\n'
+              'For more informations on how to install an environment variable '
+              'according to your OS , visit this page : \n'
+              'https://github.com/dzertus/Helpers-Interface/blob/main/README.md#maya-helper-interface\n'
+              )
+        # Shut down process because HINTERFACE env variable not found
+        # Todo Open dialog to set
+        print('Shutting down process')
+        sys.exit()
+
+    if not HINTERFACE in sys.path:
+        sys.path.insert(0, HINTERFACE)
 
 
 def run(scripts=None):
+    """
+    :param scripts:
+    :return:
+    """
+
+
     logger.error()
     logger.info('...Init App')
 
@@ -53,9 +63,12 @@ def run(scripts=None):
     sys.exit(app.exec_())
 
 def main():
+    """
 
-    cfg_path = os.path.join(HI_PYTHONPATH, 'config.yaml')
-    default_config_url = 'https://raw.githubusercontent.com/dzertus/Helpers-Interface/python2/python/config.yaml'
+    :return:
+    """
+    cfg_path = os.path.join(HINTERFACE, '../conf/config.yaml')
+    default_config_url = os.path.join(HINTERFACE, 'conf/config.yaml')
     if not os.path.exists(cfg_path):
         request.download_file(default_config_url, cfg_path)
 

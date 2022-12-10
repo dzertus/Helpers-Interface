@@ -1,4 +1,3 @@
-#!/usr/bin/python2
 import yaml
 from pyaml_env import parse_config
 

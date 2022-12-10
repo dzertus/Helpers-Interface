@@ -1,7 +1,3 @@
-#!/usr/bin/python2
-
-
-
 class Error(Exception):
     """Base class for other exceptions"""
     pass

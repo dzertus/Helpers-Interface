@@ -6,7 +6,7 @@ main:
   regex:
     module_file_sanity_name: hi_(.*)\..*
   sources:
-    - !HI ${HI_PYTHONPATH}\default_source
+    - !HI ${HINTERFACE}\default_source
 logs:
   version: 1
   disable_existing_loggers: true

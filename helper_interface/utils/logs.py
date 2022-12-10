@@ -1,9 +1,5 @@
-#!/usr/bin/python2
-
-import os
 import logging
 import logging.config
-
 
 
 class Log:

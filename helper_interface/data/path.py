@@ -1,5 +1,3 @@
-#!/usr/bin/python2
-
 """
 Parsing method for modules collection
 """
@@ -8,6 +6,7 @@ import logging
 import re
 
 from data import config as uc
+
 
 logger = logging.getLogger('path_parser')
 
