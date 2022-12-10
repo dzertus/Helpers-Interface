@@ -58,7 +58,7 @@ class ScriptModel(Model):
 
 class ScriptAbstract:
     """
-    This class is parent class for the scripts eg : scripts/__template_to_copy__.py
+    This class is parent class for the scripts eg : scripts/__template__.py
     """
 
     def __init__(self, source_path, script_data):

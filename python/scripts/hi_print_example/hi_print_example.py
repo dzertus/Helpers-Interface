@@ -1,7 +1,6 @@
 #!/usr/bin/python2
 
 from models import model_cls
-
 reload(model_cls)
 
 class Script(model_cls.ScriptAbstract):

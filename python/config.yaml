@@ -1,15 +1,12 @@
 main:
   extentions:
     application_ext: hi
-    icon_valid_ext:
-    - .png
-    module_valide_ext:
-    - .py
+    icon_valid_ext: ['.png']
+    module_valide_ext: ['.py']
   regex:
     module_file_sanity_name: hi_(.*)\..*
   sources:
-  - ${HI_PYTHONPATH}\scripts
-
+    - !HI ${HI_PYTHONPATH}\scripts
 log:
   version: 1
   disable_existing_loggers: true
@@ -30,20 +27,20 @@ log:
   loggers:
     main:
       level: DEBUG
-      handlers: [ console, file ]
+      handlers: [ 'console', 'file' ]
       propagate: no
     handler_cls:
       level: INFO
-      handlers: [ console, file ]
+      handlers: [ 'console', 'file' ]
       propagate: no
     icons_utils:
       level: INFO
-      handlers: [ console, file ]
+      handlers: [ 'console', 'file' ]
       propagate: no
     path_parser:
       level: INFO
-      handlers: [ console, file ]
+      handlers: [ 'console', 'file' ]
       propagate: no
   root:
     level: INFO
-    handlers: [ console ]
+    handlers: [ 'console' ]

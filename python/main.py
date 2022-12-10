@@ -60,7 +60,8 @@ def main():
 
     config_parser = uc.YamlParser(cfg_path)
     config = config_parser.load_yaml()
-
+    import pprint
+    #pprint.pprint(config)
     # Setup main config
     main_config = config['main']
     parser = path.PathParser(main_config)
@@ -81,7 +82,7 @@ def main():
         if os.path.isdir(src):
             src_data = parser.get_scripts_from_source(src)
         else:
-            raise OSError('Config not found, looking for:\n\t {}\nYou can download a new one here:\n[Put Link]'.format(src))
+            raise OSError('Config not found, looking for:\n\t {}\nDo you want to back up a config file ? '.format(src))
         for script_name in src_data.keys():
             module_path = os.path.join(src_data[script_name]['dir'], src_data[script_name]['module'])
             spec = importlib.util.spec_from_file_location(script_name, module_path)
