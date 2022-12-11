@@ -1,10 +1,21 @@
+"""
+Handlers
+"""
 import logging
-
 
 logger = logging.getLogger('handler_cls')
 
-class Handler():
+
+class Handler:
+    """
+    Handler
+    """
+
     def __init__(self, model):
+        """
+
+        :param model:
+        """
         super(Handler).__init__()
 
         logger.debug('Initialize Handler')
@@ -17,8 +28,8 @@ class Handler():
         :param item:
         :return:
         """
-        self.model.add(item) # Data model
-        self.add_btn(item) # Ui
+        self.model.add(item)  # Data model
+        self.add_btn(item)  # Ui
 
     def add_btn(self, item):
         """
@@ -51,7 +62,7 @@ class Handler():
         # advanced view
         btn.gen_adv_view()
         btn.set_advanced_view(btn.adv_view)
-        print('Button adv view {0}'.format(btn.adv_view))
+        print(f'Button adv view {btn.adv_view}')
 
     def set_active_view(self, view):
         """
@@ -67,8 +78,8 @@ class Handler():
         :return:
         """
         print('switch view')
-        logger.debug('Right Click on : {}'.format(btn.item.name))
-        logger.debug('Active view current instance : {}'.format(type(self.active_view)))
+        logger.debug(f'Right Click on : {btn.item.name}')
+        logger.debug(f'Active view current instance : {type(self.active_view)}')
         current_btn_index = self.default_view.container_layout.indexOf(btn)
         print(current_btn_index)
 
@@ -82,6 +93,10 @@ class Handler():
             self.set_active_view(self.default_view)
 
     def open_sources_manager_dialog(self):
+        """
+
+        :return:
+        """
         self.active_view.test()
 
     def run(self):

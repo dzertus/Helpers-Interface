@@ -1,12 +1,10 @@
-import sys
-import os
 import importlib
-
-from utils import logs as ul
+import os
+import sys
 
 from data import path, config as uc
+from utils import logs as ul
 from utils import request
-
 
 
 def install_env():
@@ -15,7 +13,7 @@ def install_env():
     :return:
     """
     HINTERFACE = os.environ.get('HINTERFACE')
-    if HINTERFACE == None:
+    if HINTERFACE is None:
         # Ask user to install HINTERFACE env variable
         print('Please install this environment variable : \n'
               'HINTERFACE as name \n'
@@ -40,7 +38,6 @@ def run(scripts=None):
     :return:
     """
 
-
     logger.error()
     logger.info('...Init App')
 
@@ -48,8 +45,8 @@ def run(scripts=None):
 
     # application
     logger.info('Running on : {}'.format(sys.executable))
-    current_app = ''
-    #app = QtWidgets.QApplication(sys.argv)
+    ''
+    # app = QtWidgets.QApplication(sys.argv)
 
     # handler
     h = handler_cls.Handler(model)
@@ -62,6 +59,7 @@ def run(scripts=None):
     logger.info('Running...')
     sys.exit(app.exec_())
 
+
 def main():
     """
 
@@ -73,9 +71,8 @@ def main():
         request.download_file(default_config_url, cfg_path)
 
     config_parser = uc.YamlParser(cfg_path)
-    config = config_parser.load_yaml()
-    import pprint
-    #pprint.pprint(config)
+    config = config_parser._load_yaml()
+    # pprint.pprint(config)
     # Setup main config
     main_config = config['main']
     parser = path.PathParser(main_config)
@@ -91,12 +88,12 @@ def main():
     logger.info('Gathering default_source locations')
     sources = parser.get_sources()
     scripts = []
-    src_data = None
+
     for src in sources:
         if os.path.isdir(src):
             src_data = parser.get_scripts_from_source(src)
         else:
-            raise OSError('Config not found, looking for:\n\t {}\nDo you want to back up a config file ? '.format(src))
+            raise OSError(f'Config not found, looking for:\n\t {src}\nDo you want to back up a config file ? ')
         for script_name in src_data.keys():
             module_path = os.path.join(src_data[script_name]['dir'], src_data[script_name]['module'])
             spec = importlib.util.spec_from_file_location(script_name, module_path)
@@ -107,6 +104,6 @@ def main():
 
     run(scripts)
 
+
 if __name__ == '__main__':
     main()
-

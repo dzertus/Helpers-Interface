@@ -1,3 +1,6 @@
+"""
+Icons Utils
+"""
 # TODO Make it a class
 import logging
 
@@ -7,26 +10,52 @@ logger = logging.getLogger('icons_utils')
 
 
 def open_image(image_path):
+    """
+
+    :param image_path:
+    :return:
+    """
     image = Image.open(image_path)
     return image
 
 
 def get_image_data(image):
+    """
+
+    :param image:
+    :return:
+    """
     data = image.getdata()
     return data
 
 
 def convert_to_rgb(image):
+    """
+
+    :param image:
+    :return:
+    """
     image = image.convert("RGB")
     return image
 
 
-def convert_to_grayscale():
-    image = im.convert("L")
+def convert_to_grayscale(image):
+    """
+
+    :param image:
+    :return:
+    """
+    image = image.convert("L")
     return image
 
 
 def change_color(image_data, new_color):
+    """
+
+    :param image_data:
+    :param new_color:
+    :return:
+    """
     new_image_data = []
     for item in image_data:
         if item[0] in list(range(200, 256)):
@@ -37,13 +66,24 @@ def change_color(image_data, new_color):
 
 
 def save_image(image, path):
+    """
+
+    :param image:
+    :param path:
+    :return:
+    """
     image.save(path)
     print('logging')
     logger.debug('image saved to {}'.format(path))
 
 
 def main():
-    image_path = r"C:\Users\youss\Documents\GitHub\Maya-Helpers-Interface\python\examples\print_example\print_example" \
+    """
+
+    :return:
+    """
+    image_path = r"C:\Users\youss\Documents\GitHub\Maya-Helpers-Interface\python\examples" \
+                 r"\print_example\print_example" \
                  r".png "
     im = open_image(image_path)
     im = convert_to_rgb(im)

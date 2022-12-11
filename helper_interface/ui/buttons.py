@@ -1,3 +1,6 @@
+"""
+Buttons Classes
+"""
 from PySide2.QtGui import QPixmap, Qt
 from PySide2.QtWidgets import QPushButton, QStyleOptionButton, QStyle
 from PySide2.QtCore import QPoint, QPointF
@@ -20,6 +23,11 @@ class ToolButton(QPushButton):
         self.setMinimumSize(40, 40)
 
     def add_item(self, item):
+        """
+
+        :param item:
+        :return:
+        """
         self.item = item
         self.setToolTip(self.item.name)
         pixmap = QPixmap(self.item.icon_path)
@@ -27,9 +35,19 @@ class ToolButton(QPushButton):
         self.setIcon(icon)
 
     def set_handler(self, handler):
+        """
+
+        :param handler:
+        :return:
+        """
         self.handler = handler
 
     def mousePressEvent(self, QMouseEvent):
+        """
+
+        :param QMouseEvent:
+        :return:
+        """
         if QMouseEvent.button() == Qt.LeftButton:
             self.run_item()
         elif QMouseEvent.button() == Qt.RightButton:
@@ -44,9 +62,18 @@ class ToolButton(QPushButton):
         self.item.run()
 
     def switch_view(self):
+        """
+
+        :return:
+        """
         self.handler.switch_view(self)
 
     def set_advanced_view(self, view):
+        """
+
+        :param view:
+        :return:
+        """
         self.adv_view = view
 
     def gen_adv_view(self):

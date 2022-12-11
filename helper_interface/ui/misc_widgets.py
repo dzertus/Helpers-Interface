@@ -1,3 +1,6 @@
+"""
+Misc widgets Classes
+"""
 from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont
 from PySide2.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QStackedWidget
 from PySide2.QtCore import Qt, QRegExp
@@ -5,7 +8,13 @@ from PySide2.QtCore import Qt, QRegExp
 
 
 class Tab(QWidget):
+    """
+    Tab
+    """
     def __init__(self):
+        """
+
+        """
         super(Tab).__init__()
         self.layout = QVBoxLayout(self)
 
@@ -46,7 +55,14 @@ class Tab(QWidget):
 
 
 class Highlighter(QSyntaxHighlighter):
+    """
+    Highlighter
+    """
     def __init__(self, parent=None):
+        """
+
+        :param parent:
+        """
         super(Highlighter, self).__init__(parent)
 
         keyword_format = QTextCharFormat()
@@ -94,6 +110,11 @@ class Highlighter(QSyntaxHighlighter):
         self.commentEndExpression = QRegExp("\\*/")
 
     def highlightBlock(self, text):
+        """
+
+        :param text:
+        :return:
+        """
         for pattern, frmt in self.highlightingRules:
             expression = QRegExp(pattern)
             index = expression.indexIn(text)
@@ -124,10 +145,21 @@ class Highlighter(QSyntaxHighlighter):
 
 
 class WidgetStack(QStackedWidget):
+    """
+    WidgetStack
+    """
     def __init__(self):
+        """
+
+        """
         super(WidgetStack, self).__init__()
         self.layout = QVBoxLayout()
 
     def add_widget(self, widget):
+        """
+        
+        :param widget:
+        :return:
+        """
         self.addWidget(widget)
         widget.setLlayout(self.layout)
