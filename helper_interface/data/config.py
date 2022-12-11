@@ -31,3 +31,4 @@ class YamlParser:
         """
         with open(self.fpath, 'w') as f:
             f.close()
+
