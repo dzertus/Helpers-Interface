@@ -1,12 +1,22 @@
-main:
+### Default Configuration file ###
+# Environment
+env:
+  sources: EXAMPLES
+
+# Settings
+settings:
+  nickname:
+    hi
+
+# Application
+app:
   extentions:
-    application_ext: hi
     icon_valid_ext: ['.png']
     module_valide_ext: ['.py']
   regex:
     module_file_sanity_name: hi_(.*)\..*
-  sources:
-    - !HI ${HINTERFACE}\default_source
+
+# Logging
 logs:
   version: 1
   disable_existing_loggers: true
@@ -23,7 +33,8 @@ logs:
       class: logging.FileHandler
       level: DEBUG
       formatter: default
-      filename: logs/default.log
+      filename:
+        - !HI ${HINTERFACE_LOGS}/default.log
   loggers:
     main:
       level: DEBUG

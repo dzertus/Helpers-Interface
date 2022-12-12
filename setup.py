@@ -14,7 +14,7 @@ if __name__ == "__main__":
     REQUIREMENTS = _read_reqs("requirements.txt")
 
     setup(
-        name="helper_interface",
+        name="core",
         packages=find_packages(),
         include_package_data=True,
         version="1.0.0",
@@ -31,8 +31,8 @@ if __name__ == "__main__":
         classifiers=[
             "Development Status :: 4 - Beta",
             "Intended Audience :: Any user",
-            "Topic :: Scientific/Engineering :: Artificial Intelligence",
+            "Topic :: Misc tools on Operating System and several Cg applications",
             "License :: OSI Approved :: MIT License",
-            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
         ],
     )

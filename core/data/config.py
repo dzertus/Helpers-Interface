@@ -1,7 +1,6 @@
 """
 Config
 """
-import yaml
 from pyaml_env import parse_config
 
 
@@ -12,11 +11,10 @@ class YamlParser:
 
         :param fpath:
         """
-        self.latest_data = yaml.dump(self.data, fpath)
         self.fpath = fpath
-        self.data = self._load_yaml()
+        self.data = self.load_yaml()
 
-    def _load_yaml(self):
+    def load_yaml(self):
         """
 
         :return:
@@ -24,7 +22,7 @@ class YamlParser:
         data = parse_config(self.fpath, tag='!HI')
         return data
 
-    def _save_yaml(self):
+    def save_yaml(self):
         """
 
         :return:
