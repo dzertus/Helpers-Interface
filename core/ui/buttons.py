@@ -3,7 +3,6 @@ Buttons Classes
 """
 from PySide2.QtGui import QPixmap, Qt
 from PySide2.QtWidgets import QPushButton, QStyleOptionButton, QStyle
-from PySide2.QtCore import QPoint, QPointF
 
 
 
