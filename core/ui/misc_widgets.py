@@ -1,3 +1,4 @@
+# Template file
 """
 Misc widgets Classes
 """

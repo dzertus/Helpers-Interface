@@ -1,10 +1,11 @@
+# Template file
 """
 Models
 """
 import os
+from abc import ABC, abstractmethod
 
-
-class Model:
+class ModelAbstract(ABC):
     """
     Model
     """
@@ -15,6 +16,7 @@ class Model:
         """
         raise NotImplementedError
 
+    @abstractmethod
     def get(self, item):
         """
         Returns an object with a .items() call method
@@ -32,8 +34,7 @@ class Model:
         """
         raise NotImplementedError
 
-
-class ScriptModel(Model):
+class ScriptModel(ModelAbstract):
     """
     ScriptModel
     """
@@ -82,8 +83,7 @@ class ScriptModel(Model):
         except KeyError as e:
             raise KeyError(str(e) + " not in the model's item list.")
 
-
-class ScriptAbstract:
+class ScriptAbstract(ABC):
     """
     This class is parent class for the default_source eg : default_source/__template__.py
     """
@@ -99,6 +99,7 @@ class ScriptAbstract:
         self.module_headname = script_data['name']
         self.icon_path = os.path.join(script_data['dir'], script_data['icon'])
 
+    @abstractmethod
     def run(self):
         """
 
@@ -106,6 +107,7 @@ class ScriptAbstract:
         """
         raise NotImplementedError
 
+    @abstractmethod
     def get_name(self):
         """
 
@@ -113,6 +115,7 @@ class ScriptAbstract:
         """
         return type(self)
 
+    @abstractmethod
     def get_dcc(self):
         """
 
@@ -120,6 +123,7 @@ class ScriptAbstract:
         """
         raise NotImplementedError
 
+    @abstractmethod
     def get_icon(self):
         """
 
@@ -127,6 +131,7 @@ class ScriptAbstract:
         """
         pass
 
+    @abstractmethod
     def get_module_basename(self):
         """
         Script module base name
@@ -134,6 +139,7 @@ class ScriptAbstract:
         """
         return self.module_name
 
+    @abstractmethod
     def get_module_path(self):
         """
         Script module location

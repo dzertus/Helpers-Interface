@@ -1,9 +1,13 @@
+# Open file
 """
 Handlers
 """
 import logging
+from logging import Logger
 
-logger = logging.getLogger('handler_cls')
+from ui import view, buttons
+
+logger: Logger = logging.getLogger('handler_cls')
 
 
 class Handler:

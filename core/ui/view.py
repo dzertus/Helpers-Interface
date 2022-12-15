@@ -1,3 +1,4 @@
+# Template file
 """
 View Classes
 """

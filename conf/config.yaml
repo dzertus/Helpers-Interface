@@ -1,3 +1,4 @@
+# Template file
 ### Default Configuration file ###
 # Environment
 env:
@@ -34,7 +35,7 @@ logs:
       level: DEBUG
       formatter: default
       filename:
-        - !HI ${HINTERFACE_LOGS}/default.log
+        - !TAG ${HINTERFACE_LOGS}/default.log
   loggers:
     main:
       level: DEBUG

@@ -1,3 +1,4 @@
+# Template file
 """
 Parsing method for modules collection
 """
@@ -24,25 +25,24 @@ class PathParser:
     Path Parser
     """
 
-    def __init__(self, config):
+    def __init__(self):
         """
 
-        :param config:
         """
-        self.config = config
-        self.sources = self.config['sources']
+        self.sources = []
 
-    def add_source(self, new_src, config_path):
+    def add_source(self, new_src, config_path, config):
         """
 
         :param new_src:
         :param config_path:
         :return:
         """
+
         if not new_src in self.sources:
             self.sources.append(new_src)
-            self.config['sources'] = self.sources
-            uc.save_yaml(config_path, self.config)
+            config['sources'] = self.sources
+            uc.save_yaml(config_path, config)
         else:
             logger.info(
                     f'{new_src} already exists as a source, will not be added to config')

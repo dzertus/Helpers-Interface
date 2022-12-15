@@ -1,3 +1,6 @@
+# Open file
+
+
 import importlib
 import os
 import sys
@@ -24,7 +27,7 @@ if env.Env.PATH is not None:
         request.download_file(default_config_url, env.Env.DEFAULT_CONF_FILE)
 
     config_parser = uc.YamlParser(env.Env.DEFAULT_CONF_FILE)
-    config = config_parser.load_yaml()
+    config = config_parser.load()
 
     # Setup optional settings
     settings = config['settings']
